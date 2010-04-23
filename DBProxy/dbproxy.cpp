@@ -24,7 +24,7 @@ bool DBProxy::polacz()
     return false;
 }
 
-bool DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar)
+unsigned int DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar )
 {
     QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, stawkaVAT)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5);" )
@@ -37,7 +37,7 @@ bool DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar)
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajTowarSklep(const TowarSklep &towar)
+unsigned int DBProxy::dodajTowarSklep(const TowarSklep &towar)
 {
     QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, stawkaVAT, cenaZakupu)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
@@ -51,7 +51,7 @@ bool DBProxy::dodajTowarSklep(const TowarSklep &towar)
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajSklep(const Sklep &sklep)
+unsigned int DBProxy::dodajSklep(const Sklep &sklep)
 {
     QString queryString = QString( "INSERT INTO Sklep (id, REGON, nazwa, upust, login, haslo,"
                                    "ulica, miejscowosc, kodPocztowy, telefon, fax, email)"
@@ -71,10 +71,10 @@ bool DBProxy::dodajSklep(const Sklep &sklep)
     return execQuery( queryString );
 }
 
-bool DBProxy::execQuery(const QString &queryString)
+unsigned int DBProxy::execQuery(const QString &queryString)
 {
     if( dodawanie && mBladDodawaniaRekordu )
-        return false;
+        return 0;
 
     QSqlQuery query( db );
 
@@ -86,10 +86,10 @@ bool DBProxy::execQuery(const QString &queryString)
             emit bladDodawaniaRekordu();    // czy przekazywac cos?
         }
 
-        return false;
+        return 0;
     }
 
-    return true;
+    return query.lastInsertId().toUInt();
 }
 
 QString DBProxy::nawiasy(const QString &string)
@@ -102,7 +102,7 @@ QString DBProxy::liczbaNaString(double liczba)
     return QString::number( liczba );
 }
 
-bool DBProxy::dodajZamowienieHurtownia(const ZamowienieHurtownia &zamowienie) {
+unsigned int DBProxy::dodajZamowienieHurtownia(const ZamowienieHurtownia &zamowienie) {
     QString queryString = QString( "INSERT INTO Zamowienie (id, idSklepu, dataZlozenia, dataRealizacji, upust, status,"
                                    "nrFaktury)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
@@ -116,7 +116,7 @@ bool DBProxy::dodajZamowienieHurtownia(const ZamowienieHurtownia &zamowienie) {
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajZamowienieSklep(const ZamowienieSklep &zamowienie) {
+unsigned int DBProxy::dodajZamowienieSklep(const ZamowienieSklep &zamowienie) {
     QString queryString = QString( "INSERT INTO Zamowienie (id, idHurtowni, dataZlozenia, dataRealizacji, status,"
                                    "nrFaktury, idPracownika)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
@@ -130,7 +130,7 @@ bool DBProxy::dodajZamowienieSklep(const ZamowienieSklep &zamowienie) {
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
+unsigned int DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
 {
     QString queryString = QString( "INSERT INTO Pozycja_zamowienia (id, idZamowienia, idTowaru, ilosc)"
                                    "VALUES (NULL, %1, %2, %3);" )
@@ -141,7 +141,7 @@ bool DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajPozycjeSprzedazy(const PozycjaSprzedazy &pozycja)
+unsigned int DBProxy::dodajPozycjeSprzedazy(const PozycjaSprzedazy &pozycja)
 {
     QString queryString = QString( "INSERT INTO PozycjaSprzedazy (id, idSprzedazy, idTowaru, ilosc, cena, stawkaVAT)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5);" )
@@ -174,7 +174,7 @@ QString DBProxy::posadaNaString(Posada posada)
     }
 }
 
-bool DBProxy::dodajFakture(const Faktura &faktura)
+unsigned int DBProxy::dodajFakture(const Faktura &faktura)
 {
     QString queryString = QString( "INSERT INTO Faktura (id, nrFaktury)"
                                    "VALUES (NULL, %1);" )
@@ -183,7 +183,7 @@ bool DBProxy::dodajFakture(const Faktura &faktura)
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajKategorie(const Kategoria &kategoria)
+unsigned int DBProxy::dodajKategorie(const Kategoria &kategoria)
 {
     QString queryString = QString( "INSERT INTO Kategoria (id, nazwa)"
                                    "VALUES (NULL, %1);" )
@@ -192,7 +192,7 @@ bool DBProxy::dodajKategorie(const Kategoria &kategoria)
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
+unsigned int DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
 {
     QString queryString = QString( "INSERT INTO Hurtownia (id, REGON, nazwa, upust,"
                                    "ulica, miejscowosc, kodPocztowy, telefon, fax, email)"
@@ -210,7 +210,7 @@ bool DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
     return execQuery( queryString );
 }
 
-bool DBProxy::dodajPracownika(const Pracownik &pracownik)
+unsigned int DBProxy::dodajPracownika(const Pracownik &pracownik)
 {
     QString queryString = QString( "INSERT INTO Pracownik (id, nazwisko, PESEL, NIP,"
                                    "posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy,"
@@ -236,7 +236,7 @@ QString DBProxy::dataNaString(const QDate &data)
     return data.toString( Qt::ISODate );
 }
 
-bool DBProxy::dodajKlienta(const Klient &klient)
+unsigned int DBProxy::dodajKlienta(const Klient &klient)
 {
     QString queryString = QString( "INSERT INTO Klient (id, REGON, ulica, miejscowosc,"
                                    "kodPocztowy, telefon, nazwa)"
@@ -252,7 +252,7 @@ bool DBProxy::dodajKlienta(const Klient &klient)
 }
 
 
-bool DBProxy::dodajSprzedaz(const Sprzedaz &sprzedaz) {
+unsigned int DBProxy::dodajSprzedaz(const Sprzedaz &sprzedaz) {
     QString queryString = QString( "INSERT INTO Sprzedaz (id, dataRealizacji, status, potwierdzenie, nrParagonu,"
                                    "idFaktury, idKlienta, idPracownika)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7);" )

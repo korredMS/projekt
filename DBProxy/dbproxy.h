@@ -307,19 +307,19 @@ public:
     void rozpocznijDodawanie();
     void zakonczDodawanie();
 
-    bool dodajFakture( const Faktura &faktura );
-    bool dodajHurtownie( const Hurtownia &hurtownia );
-    bool dodajKategorie( const Kategoria &kategoria );
-    bool dodajKlienta( const Klient &klient );
-    bool dodajPozycjeSprzedazy( const PozycjaSprzedazy &pozycja );
-    bool dodajPozycjeZamowienia( const PozycjaZamowienia &pozycja );
-    bool dodajPracownika( const Pracownik &pracownik );
-    bool dodajSklep( const Sklep &sklep );
-    bool dodajSprzedaz( const Sprzedaz &sprzedaz );
-    bool dodajTowarHurtownia( const TowarHurtownia &towar );
-    bool dodajTowarSklep( const TowarSklep &towar );
-    bool dodajZamowienieHurtownia( const ZamowienieHurtownia &zamowienie );
-    bool dodajZamowienieSklep( const ZamowienieSklep &zamowienie );
+    unsigned int dodajFakture( const Faktura &faktura );
+    unsigned int dodajHurtownie( const Hurtownia &hurtownia );
+    unsigned int dodajKategorie( const Kategoria &kategoria );
+    unsigned int dodajKlienta( const Klient &klient );
+    unsigned int dodajPozycjeSprzedazy( const PozycjaSprzedazy &pozycja );
+    unsigned int dodajPozycjeZamowienia( const PozycjaZamowienia &pozycja );
+    unsigned int dodajPracownika( const Pracownik &pracownik );
+    unsigned int dodajSklep( const Sklep &sklep );
+    unsigned int dodajSprzedaz( const Sprzedaz &sprzedaz );
+    unsigned int dodajTowarHurtownia( const TowarHurtownia &towar );
+    unsigned int dodajTowarSklep( const TowarSklep &towar );
+    unsigned int dodajZamowienieHurtownia( const ZamowienieHurtownia &zamowienie );
+    unsigned int dodajZamowienieSklep( const ZamowienieSklep &zamowienie );
 
 signals:
     void bladDodawaniaRekordu();
@@ -329,7 +329,7 @@ public slots:
 
 private:
     QString dataNaString( const QDate &data );
-    bool execQuery( const QString &query );
+    unsigned int execQuery( const QString &query );
     QString liczbaNaString( double liczba );
     QString nawiasy( const QString &string );
     QString posadaNaString( Posada posada );
