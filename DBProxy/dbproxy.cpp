@@ -2,7 +2,9 @@
 
 DBProxy::DBProxy(QObject *parent, const QString &host, const QString &dbName,
                  const QString &login, const QString &pass) :
-    QObject(parent)
+    QObject(parent),
+    dodawanie( false ),
+    mBladDodawaniaRekordu( false )
 {
     db = QSqlDatabase::addDatabase( "QMYSQL", dbName );
     db.setHostName( host );
@@ -24,7 +26,7 @@ bool DBProxy::polacz()
 
 bool DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar)
 {
-    QString queryString = QString( "INSERT INTO Towar (idTowaru, Nazwa, opis, cena, ilosc, stawkaVAT)"
+    QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, stawkaVAT)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5);" )
             .arg( nawiasy( towar.nazwa ) )
             .arg( nawiasy( towar.opis ) )
@@ -37,7 +39,7 @@ bool DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar)
 
 bool DBProxy::dodajTowarSklep(const TowarSklep &towar)
 {
-    QString queryString = QString( "INSERT INTO Towar (idTowaru, Nazwa, opis, cena, ilosc, stawkaVAT, cenaZakupu)"
+    QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, stawkaVAT, cenaZakupu)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
             .arg( nawiasy( towar.nazwa ) )
             .arg( nawiasy( towar.opis ) )
@@ -51,7 +53,7 @@ bool DBProxy::dodajTowarSklep(const TowarSklep &towar)
 
 bool DBProxy::dodajSklep(const Sklep &sklep)
 {
-    QString queryString = QString( "INSERT INTO Sklep (idSklepu, REGON, nazwa, upust, login, haslo,"
+    QString queryString = QString( "INSERT INTO Sklep (id, REGON, nazwa, upust, login, haslo,"
                                    "ulica, miejscowosc, kodPocztowy, telefon, fax, email)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11);" )
             .arg( nawiasy( sklep.REGON ) )
@@ -71,10 +73,19 @@ bool DBProxy::dodajSklep(const Sklep &sklep)
 
 bool DBProxy::execQuery(const QString &queryString)
 {
+    if( dodawanie && mBladDodawaniaRekordu )
+        return false;
+
     QSqlQuery query( db );
 
     if( !query.exec( queryString ) ) {
         emit log( query.lastError().text() );
+
+        if( dodawanie ) {
+            mBladDodawaniaRekordu = true;
+            emit bladDodawaniaRekordu();    // czy przekazywac cos?
+        }
+
         return false;
     }
 
@@ -92,7 +103,7 @@ QString DBProxy::liczbaNaString(double liczba)
 }
 
 bool DBProxy::dodajZamowienieHurtownia(const ZamowienieHurtownia &zamowienie) {
-    QString queryString = QString( "INSERT INTO Zamowienie (idZamowienia, idSklepu, dataZlozenia, dataRealizacji, upust, status,"
+    QString queryString = QString( "INSERT INTO Zamowienie (id, idSklepu, dataZlozenia, dataRealizacji, upust, status,"
                                    "nrFaktury)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
             .arg( liczbaNaString( zamowienie.idSklepu ) )
@@ -106,7 +117,7 @@ bool DBProxy::dodajZamowienieHurtownia(const ZamowienieHurtownia &zamowienie) {
 }
 
 bool DBProxy::dodajZamowienieSklep(const ZamowienieSklep &zamowienie) {
-    QString queryString = QString( "INSERT INTO Zamowienie (idZamowienia, idHurtowni, dataZlozenia, dataRealizacji, status,"
+    QString queryString = QString( "INSERT INTO Zamowienie (id, idHurtowni, dataZlozenia, dataRealizacji, status,"
                                    "nrFaktury, idPracownika)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
             .arg( liczbaNaString( zamowienie.idHurtowni ) )
@@ -121,7 +132,7 @@ bool DBProxy::dodajZamowienieSklep(const ZamowienieSklep &zamowienie) {
 
 bool DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
 {
-    QString queryString = QString( "INSERT INTO Pozycja_zamowienia (idPozycjiZamowienia, idZamowienia, idTowaru, ilosc)"
+    QString queryString = QString( "INSERT INTO Pozycja_zamowienia (id, idZamowienia, idTowaru, ilosc)"
                                    "VALUES (NULL, %1, %2, %3);" )
             .arg( liczbaNaString( pozycja.idZamowienia ) )
             .arg( liczbaNaString( pozycja.idTowaru ) )
@@ -132,7 +143,7 @@ bool DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
 
 bool DBProxy::dodajPozycjeSprzedazy(const PozycjaSprzedazy &pozycja)
 {
-    QString queryString = QString( "INSERT INTO PozycjaSprzedazy (idPozycjiSprzedazy, idSprzedazy, idTowaru, ilosc, cena, stawkaVAT)"
+    QString queryString = QString( "INSERT INTO PozycjaSprzedazy (id, idSprzedazy, idTowaru, ilosc, cena, stawkaVAT)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5);" )
             .arg( liczbaNaString( pozycja.idSprzedazy ) )
             .arg( liczbaNaString( pozycja.idTowaru ) )
@@ -165,7 +176,7 @@ QString DBProxy::posadaNaString(Posada posada)
 
 bool DBProxy::dodajFakture(const Faktura &faktura)
 {
-    QString queryString = QString( "INSERT INTO Faktura (idFaktury, nrFaktury)"
+    QString queryString = QString( "INSERT INTO Faktura (id, nrFaktury)"
                                    "VALUES (NULL, %1);" )
             .arg( nawiasy( faktura.nr ) );
 
@@ -174,7 +185,7 @@ bool DBProxy::dodajFakture(const Faktura &faktura)
 
 bool DBProxy::dodajKategorie(const Kategoria &kategoria)
 {
-    QString queryString = QString( "INSERT INTO Kategoria (idKateogorii, nazwa)"
+    QString queryString = QString( "INSERT INTO Kategoria (id, nazwa)"
                                    "VALUES (NULL, %1);" )
             .arg( nawiasy( kategoria.nazwa ) );
 
@@ -183,7 +194,7 @@ bool DBProxy::dodajKategorie(const Kategoria &kategoria)
 
 bool DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
 {
-    QString queryString = QString( "INSERT INTO Hurtownia (idHurtowni, REGON, nazwa, upust,"
+    QString queryString = QString( "INSERT INTO Hurtownia (id, REGON, nazwa, upust,"
                                    "ulica, miejscowosc, kodPocztowy, telefon, fax, email)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7, %8, %9);" )
             .arg( nawiasy( hurtownia.REGON ) )
@@ -201,7 +212,7 @@ bool DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
 
 bool DBProxy::dodajPracownika(const Pracownik &pracownik)
 {
-    QString queryString = QString( "INSERT INTO Pracownik (idPracownika, nazwisko, PESEL, NIP,"
+    QString queryString = QString( "INSERT INTO Pracownik (id, nazwisko, PESEL, NIP,"
                                    "posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy,"
                                    "telefon, email)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11);" )
@@ -227,7 +238,7 @@ QString DBProxy::dataNaString(const QDate &data)
 
 bool DBProxy::dodajKlienta(const Klient &klient)
 {
-    QString queryString = QString( "INSERT INTO Klient (idKlienta, REGON, ulica, miejscowosc,"
+    QString queryString = QString( "INSERT INTO Klient (id, REGON, ulica, miejscowosc,"
                                    "kodPocztowy, telefon, nazwa)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
             .arg( nawiasy( klient.regon ) )
@@ -242,7 +253,7 @@ bool DBProxy::dodajKlienta(const Klient &klient)
 
 
 bool DBProxy::dodajSprzedaz(const Sprzedaz &sprzedaz) {
-    QString queryString = QString( "INSERT INTO Sprzedaz (idSprzedazy, dataRealizacji, status, potwierdzenie, nrParagonu,"
+    QString queryString = QString( "INSERT INTO Sprzedaz (id, dataRealizacji, status, potwierdzenie, nrParagonu,"
                                    "idFaktury, idKlienta, idPracownika)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7);" )
             .arg( nawiasy( dataNaString( sprzedaz.dataRealizacji ) ) )
@@ -268,4 +279,29 @@ QString DBProxy::potwierdzenieNaString(Potwierdzenie potwierdzenie)
 void DBProxy::debug(QString str)
 {
     qDebug() << str;
+}
+
+void DBProxy::rozpocznijDodawanie()
+{
+    dodawanie = true;
+    mBladDodawaniaRekordu = false;
+}
+
+void DBProxy::zakonczDodawanie()
+{
+    dodawanie = false;
+
+    foreach( Rekord *rekord, aktualnieDodawaneRekordy ) {
+        usunRekord( rekord );
+    }
+
+    aktualnieDodawaneRekordy.clear();
+}
+
+void DBProxy::usunRekord(const Rekord *rekord)
+{
+    QString queryString = QString( "DELETE FROM %1 WHERE id=%2;" )
+                            .arg( rekord->tabela )
+                            .arg( rekord->id );
+    execQuery( queryString );
 }

@@ -35,10 +35,22 @@ public:
         PotwierdzenieFaktura
     };
 
-    struct Hurtownia {
+    struct Rekord {
+        Rekord( const QString &tabela, unsigned int id = 0 ) {
+            this->id = id;
+            this->tabela = tabela;
+        }
+
+        unsigned int id;
+        QString tabela;
+    };
+
+    struct Hurtownia : public Rekord {
         Hurtownia( const QString &nazwa, const QString &regon, const QString &ulica, const QString &miejscowosc,
                    const QString &kodPocztowy, const QString &telefon, const QString &fax, const QString &email,
-                   float upust = 0, unsigned int id = 0 ) {
+                   float upust = 0, unsigned int id = 0 )
+                       : Rekord( "Hurtownia", id )
+        {
             this->nazwa = nazwa;
             this->REGON = regon;
             this->ulica = ulica;
@@ -47,13 +59,11 @@ public:
             this->telefon = telefon;
             this->fax = fax;
             this->email = email;
-            this->id = id;
             this->upust = upust;
         }
 
         QString nazwa, REGON, ulica, miejscowosc, kodPocztowy, telefon, fax, email;
         float upust;
-        unsigned int id;
     };
 
     struct Sklep : public Hurtownia {
@@ -70,30 +80,29 @@ public:
         QString login, haslo;
     };
 
-    struct Towar {
+    struct Towar : public Rekord {
         Towar( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
-               StawkaVAT vat, unsigned int id = 0 ) {
+               StawkaVAT vat, unsigned int id = 0 )
+                   : Rekord( "Towar", id )
+        {
             this->nazwa = nazwa;
             this->opis = opis;
             this->ilosc = ilosc;
             this->cena = cena;
             this->vat = vat;
-            this->id = id;
         }
 
         QString nazwa, opis;
         size_t ilosc;
         float cena;
         StawkaVAT vat;
-        unsigned int id;
     };
 
     struct TowarHurtownia : public Towar {
         TowarHurtownia( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
                         StawkaVAT vat, unsigned int id = 0 )
                             : Towar( nazwa, opis, ilosc, cena, vat, id )
-        {
-        }
+        {}
     };
 
     struct TowarSklep : public Towar {
@@ -103,34 +112,39 @@ public:
         {
             this->cenaZakupu = cenaZakupu;
         }
+
         float cenaZakupu;
     };
 
     struct Pozycja {
-        Pozycja( unsigned int idTowaru, size_t ilosc, unsigned int id = 0 ) {
+        Pozycja( unsigned int idTowaru, size_t ilosc )
+        {
             this->idTowaru = idTowaru;
             this->ilosc = ilosc;
-            this->id = id;
         }
 
-        unsigned int id, idTowaru;
+        unsigned int idTowaru;
         size_t ilosc;
     };
 
-    struct PozycjaZamowienia : public Pozycja {
+    struct PozycjaZamowienia : public Pozycja, Rekord {
         PozycjaZamowienia( unsigned int idTowaru, size_t ilosc, unsigned int idZamowienia,
                            unsigned int id = 0 )
-                               : Pozycja( idTowaru, ilosc, id ) {
+                               : Pozycja( idTowaru, ilosc ),
+                                 Rekord( "Pozycja_zamowienia", id )
+        {
             this->idZamowienia = idZamowienia;
         }
 
         unsigned int idZamowienia;
     };
 
-    struct PozycjaSprzedazy : public Pozycja {
+    struct PozycjaSprzedazy : public Pozycja, Rekord {
         PozycjaSprzedazy( unsigned int idTowaru, size_t ilosc, unsigned int idSprzedazy,
                           float cena, StawkaVAT vat, unsigned int id = 0 )
-                               : Pozycja( idTowaru, ilosc, id ) {
+                               : Pozycja( idTowaru, ilosc ),
+                                 Rekord( "Pozycja_sprzedazy", id )
+        {
             this->idSprzedazy = idSprzedazy;
             this->cena = cena;
             this->vat = vat;
@@ -143,24 +157,25 @@ public:
 
     struct Transakcja {
         Transakcja( const QDate dataRealizacji = QDate(), float upust = 0.0,
-                    StatusZamowienia status = Oczekujace, unsigned int id = 0 ) {
+                    StatusZamowienia status = Oczekujace )
+        {
             this->dataRealizacji = dataRealizacji;
             this->upust = upust;
             this->status = status;
-            this->id = id;
         }
 
-        unsigned int id;
         QDate dataRealizacji;
         float upust;
         StatusZamowienia status;
     };
 
-    struct ZamowienieHurtownia : public Transakcja {
+    struct ZamowienieHurtownia : public Transakcja, Rekord {
         ZamowienieHurtownia( unsigned int idSklepu, const QDate dataZlozenia,
                              const QString &nrFaktury, const QDate dataRealizacji = QDate(), float upust = 0.0,
                              StatusZamowienia status = Oczekujace, unsigned int id = 0 )
-                                 : Transakcja( dataRealizacji, upust, status, id ) {
+                                 : Transakcja( dataRealizacji, upust, status ),
+                                   Rekord( "Zamowienie", id )
+        {
             this->idSklepu = idSklepu;
             this->dataZlozenia = dataZlozenia;
             this->nrFaktury = nrFaktury;
@@ -171,27 +186,32 @@ public:
         QString nrFaktury;
     };
 
-    struct ZamowienieSklep : public Transakcja {
+    struct ZamowienieSklep : public Transakcja, Rekord {
         ZamowienieSklep( unsigned int idHurtowni, unsigned int idPracownika, const QDate dataZlozenia,
                          const QString &nrFaktury, const QDate dataRealizacji = QDate(), float upust = 0.0,
                          StatusZamowienia status = Oczekujace, unsigned int id = 0 )
-            : Transakcja( dataRealizacji, upust, status, id ) {
+            : Transakcja( dataRealizacji, upust, status ),
+              Rekord( "Zamowienie", id )
+        {
             this->idHurtowni = idHurtowni;
             this->idPracownika = idPracownika;
             this->nrFaktury = nrFaktury;
             this->dataZlozenia = dataZlozenia;
         }
+
         unsigned int idPracownika, idHurtowni;
         QDate dataZlozenia;
         QString nrFaktury;
     };
 
-    struct Sprzedaz : public Transakcja {
+    struct Sprzedaz : public Transakcja, Rekord {
         Sprzedaz( unsigned int idPracownika, unsigned int idKlienta, unsigned int idFaktury,
                   const QString &nrParagonu, Potwierdzenie potwierdzenie,
                   const QDate dataRealizacji = QDate(), float upust = 0.0,
                   StatusZamowienia status = Oczekujace, unsigned int id = 0 )
-            : Transakcja( dataRealizacji, upust, status, id ) {
+            : Transakcja( dataRealizacji, upust, status ),
+              Rekord( "Sprzedaz", id )
+        {
             this->potwierdzenie = potwierdzenie;
             this->nrParagonu = nrParagonu;
             this->idFaktury = idFaktury;
@@ -204,62 +224,64 @@ public:
         unsigned int idFaktury, idKlienta, idPracownika;
     };
 
-    struct Faktura {
-        Faktura( const QString &nr, unsigned int id = 0 ) {
+    struct Faktura : public Rekord {
+        Faktura( const QString &nr, unsigned int id = 0 )
+            : Rekord( "Faktura", id )
+        {
             this->nr = nr;
-            this->id = id;
         }
 
-        unsigned int id;
         QString nr;
     };
 
-    struct Kategoria {
-        Kategoria( const QString &nazwa, unsigned int id = 0 ) {
+    struct Kategoria : public Rekord {
+        Kategoria( const QString &nazwa, unsigned int id = 0 )
+            : Rekord( "Kategoria", id )
+        {
             this->nazwa = nazwa;
-            this->id = id;
         }
 
-        unsigned int id;
         QString nazwa;
     };
 
     struct Czlowiek {
         Czlowiek( const QString &nazwa, const QString &ulica, const QString &miejscowosc,
-                  const QString &kodPocztowy, const QString &telefon, const QString &email,
-                  unsigned int id = 0 ) {
+                  const QString &kodPocztowy, const QString &telefon, const QString &email )
+        {
             this->nazwa = nazwa;
             this->ulica = ulica;
             this->miejscowosc = miejscowosc;
             this->kodPocztowy = kodPocztowy;
             this->telefon = telefon;
             this->email = email;
-            this->id = id;
         }
 
-        unsigned int id;
         QString nazwa, ulica, miejscowosc, kodPocztowy, telefon, email;
     };
 
-    struct Klient : public Czlowiek {
+    struct Klient : public Czlowiek, Rekord {
         Klient( const QString &regon, const QString &nazwa, const QString &ulica, const QString &miejscowosc,
                 const QString &kodPocztowy, const QString &telefon, const QString &email,
                 unsigned int id = 0 )
-                    : Czlowiek( nazwa, ulica, miejscowosc, kodPocztowy, telefon, email, id ) {
+                    : Czlowiek( nazwa, ulica, miejscowosc, kodPocztowy, telefon, email ),
+                      Rekord( "Klient", id )
+        {
             this->regon = regon;
         }
 
         QString regon;
     };
 
-    struct Pracownik : public Czlowiek {
+    struct Pracownik : public Czlowiek, Rekord {
         Pracownik( const QString &pesel, const QString &nip, const QString &nazwa,
                    Posada posada, const QDate dataZatrudnienia, float stawka,
                    const QString &ulica, const QString &miejscowosc,
                    const QString &kodPocztowy, const QString &telefon, const QString &email,
                    const QString &login, const QString &haslo,
                    unsigned int id = 0 )
-                    : Czlowiek( nazwa, ulica, miejscowosc, kodPocztowy, telefon, email, id ) {
+                    : Czlowiek( nazwa, ulica, miejscowosc, kodPocztowy, telefon, email ),
+                      Rekord( "Pracownik", id )
+        {
             this->pesel = pesel,
             this->nip = nip;
             this->nazwa = nazwa;
@@ -276,15 +298,14 @@ public:
         float stawka;
     };
 
-    // deklaracja klasy
+    // deklaracja metod
     explicit DBProxy( QObject *parent, const QString &host, const QString &dbName,
                       const QString &login, const QString &pass);
 
     bool polacz();
 
-    QSqlDatabase baza() {
-        return db;
-    }
+    void rozpocznijDodawanie();
+    void zakonczDodawanie();
 
     bool dodajFakture( const Faktura &faktura );
     bool dodajHurtownie( const Hurtownia &hurtownia );
@@ -301,6 +322,7 @@ public:
     bool dodajZamowienieSklep( const ZamowienieSklep &zamowienie );
 
 signals:
+    void bladDodawaniaRekordu();
     void log( QString str );
 
 public slots:
@@ -313,8 +335,15 @@ private:
     QString posadaNaString( Posada posada );
     QString potwierdzenieNaString( Potwierdzenie potwierdzenie );
     QString statusNaString( StatusZamowienia status );
+    void usunRekord( const Rekord *rekord );
 
     QSqlDatabase db;
+
+    // zarz±dzie maszyn± stanu zwi±zan± z kontrol± b³êdów przy dodawaniu
+    // rekordów do bazy danych
+    bool dodawanie;
+    bool mBladDodawaniaRekordu;
+    QList< Rekord* > aktualnieDodawaneRekordy;
 
 private slots:
     void debug( QString str );
