@@ -82,7 +82,7 @@
     <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Tf1n4moWBF,guid=3d4817dced3a25ddc7060b600000000e</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-zgDewuCgKt,guid=b7d18e3f426e16e6e28c71160000000f</value>
     <value type="QString">DCCC_PATH=/usr/lib64/distcc/bin</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -105,8 +105,8 @@
     <value type="QString">KDE_MULTIHEAD=false</value>
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
+    <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
     <value type="QString">LANG=pl_PL</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LC_ALL=pl_PL</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
@@ -118,7 +118,7 @@
     <value type="QString">PWD=/home/mslupny</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/mslupny/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2109,unix/evil_cat:/tmp/.ICE-unix/2109</value>
+    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2113,unix/evil_cat:/tmp/.ICE-unix/2113</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib64/strigi:</value>
@@ -153,7 +153,7 @@
     <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Tf1n4moWBF,guid=3d4817dced3a25ddc7060b600000000e</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-zgDewuCgKt,guid=b7d18e3f426e16e6e28c71160000000f</value>
     <value type="QString">DCCC_PATH=/usr/lib64/distcc/bin</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -176,8 +176,8 @@
     <value type="QString">KDE_MULTIHEAD=false</value>
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
+    <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
     <value type="QString">LANG=pl_PL</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LC_ALL=pl_PL</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
@@ -189,7 +189,7 @@
     <value type="QString">PWD=/home/mslupny</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/mslupny/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2109,unix/evil_cat:/tmp/.ICE-unix/2109</value>
+    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2113,unix/evil_cat:/tmp/.ICE-unix/2113</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib64/strigi:</value>

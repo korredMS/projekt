@@ -39,12 +39,13 @@ unsigned int DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar )
 
 unsigned int DBProxy::dodajTowarSklep(const TowarSklep &towar)
 {
-    QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, stawkaVAT, cenaZakupu)"
-                                   "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
+    QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, idKategorii, stawkaVAT, cenaZakupu)"
+                                   "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7);" )
             .arg( nawiasy( towar.nazwa ) )
             .arg( nawiasy( towar.opis ) )
             .arg( liczbaNaString( towar.cena ) )
             .arg( liczbaNaString( towar.ilosc ) )
+            .arg( liczbaNaString( towar.idKategorii ) )
             .arg( nawiasy( liczbaNaString( towar.vat ) ) )
             .arg( liczbaNaString( towar.cenaZakupu ) );
 

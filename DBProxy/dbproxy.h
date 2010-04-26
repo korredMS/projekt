@@ -107,13 +107,15 @@ public:
 
     struct TowarSklep : public Towar {
         TowarSklep( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
-                    StawkaVAT vat, float cenaZakupu, unsigned int id = 0 )
+                    StawkaVAT vat, float cenaZakupu, unsigned int idKategorii, unsigned int id = 0 )
                             : Towar( nazwa, opis, ilosc, cena, vat, id )
         {
             this->cenaZakupu = cenaZakupu;
+            this->idKategorii = idKategorii;
         }
 
         float cenaZakupu;
+        unsigned int idKategorii;
     };
 
     struct Pozycja {
