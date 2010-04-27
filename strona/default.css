@@ -1,0 +1,188 @@
+body {
+	margin-top: 30px;
+	background: #787878;
+	text-align: justify;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	color: #484747;
+}
+
+
+h1 {
+	font-size: 1.6em;
+	font-weight: normal;
+}
+
+
+
+/* Header */
+
+#logo {
+	width: 980px;
+	height: 200px;
+	margin: 0 auto;
+	background: url(images/logo.jpg) no-repeat left top;
+}
+
+/* Page */
+
+#page {
+	width: 980px;
+	min-height: 500px;
+	margin: 0 auto;
+	padding: 10px 0;  /*/odstep z gory, boku/*/
+	background: #FFFFFF;
+}
+
+
+/* Latest Post */
+
+
+/* Content */
+
+#content {
+
+	float: left;
+	width: 537px;
+}
+
+.post {
+	padding: 15px 10px 10px 15px;
+	line-height: 200%;
+}
+
+.post h1 {
+	font-weight: normal;
+}
+
+.entry {
+	padding: 15px 20px 10px 20px;
+}
+
+.title {
+	margin: 0;
+	font-weight: normal;
+	color: #8C0209;
+}
+
+
+.title a:hover {
+	border-bottom: 1px dotted #000000;
+}
+
+
+#kostka{
+	padding: 8px;
+	float: center;
+}
+
+/* Sidebars */
+
+#sidebar0 {
+	float: left;
+	padding: 0 0 0 2px; 
+	
+}
+
+#glowna{
+text-decoration: none;
+}
+
+#sidebar1 {
+	float: right;
+	padding: 0 1px 0 0; 
+}
+
+.sidebar {
+	float: left;
+	width: 220px;
+	padding: 0;
+	font-size: 12px;
+}
+
+
+
+.sidebar ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sidebar li {
+
+	padding: 8px 0px;
+}
+
+.sidebar li li {
+	margin: 0 0 0 0;
+	padding: 8px 0px;
+	border-bottom: 1px #BBBBBB dashed;
+}
+
+
+.sidebar li h2 {
+	height: 30px;
+	margin: 0 0 0 0;
+	padding: 10px 15px 0px 15px;
+	background: #890208 url(images/img05.jpg) no-repeat left top;
+	letter-spacing: -1px;
+	font-size: 16px;
+	color: #FFFFFF;
+}
+
+
+#sidebar0 h2 a{
+	color: #ffffff;			/* kolor odnosnikow glownych przyciskow*/
+}
+
+#sidebar0 a:hover {
+	color: #fbffa6;
+}
+	
+.sidebar dt {
+  cursor: pointer;
+	margin: 0 20px 0 15px;
+	padding: 8px 0px;
+
+}
+	
+	
+	
+/* Footer */
+
+#stopka {
+	text-align: center;
+	font-size:9px;
+	width: 980px;
+	height: 50px;
+	margin: 0 auto;	
+	background: url(images/stopka.jpg) no-repeat left top;
+}
+
+
+#footer {
+	width: 960px;
+	height: 70px;
+	margin: 0 auto;
+	padding: 0 20px;
+
+}
+
+#footer p {
+	margin: 0;
+	padding: 25px 0 0 0;
+	text-align: center;
+	font-size: smaller;
+}
+
+#footer a {
+}
+
+#footer .link {
+	float: right;
+}
+
+#footer .copyright {
+	float: left;
+}
+
