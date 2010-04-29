@@ -1,4 +1,7 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+﻿SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+# zmienione kodowanie na UTF-8
+# zmienione atrybuty: `vat`, `nazwa` (tylko w 'Towar'), `regon`, `pesel`, `nip`
 
 CREATE TABLE IF NOT EXISTS `Faktura` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -8,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `Faktura` (
 
 CREATE TABLE IF NOT EXISTS `Hurtownia` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `REGON` varchar(9) NOT NULL,
+  `regon` varchar(9) NOT NULL,
   `upust` float DEFAULT NULL,
   `ulica` varchar(30) NOT NULL,
   `miejscowosc` varchar(20) NOT NULL,
@@ -25,12 +28,17 @@ CREATE TABLE IF NOT EXISTS `Kategoria` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
   `nazwa` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `Kategoria` (`id`, `nazwa`) VALUES
+(1, 'Art. spożywcze'),
+(2, 'Sprzęt'),
+(3, 'Broń');
 
 CREATE TABLE IF NOT EXISTS `Klient` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `REGON` varchar(9) NOT NULL,
+  `regon` varchar(9) NOT NULL,
   `ulica` varchar(30) NOT NULL,
   `miejscowosc` varchar(20) NOT NULL,
   `kodPocztowy` varchar(5) NOT NULL,
@@ -41,9 +49,8 @@ CREATE TABLE IF NOT EXISTS `Klient` (
 
 CREATE TABLE IF NOT EXISTS `Pracownik` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `nazwisko` varchar(40) NOT NULL,
-  `PESEL` varchar(11) NOT NULL,
-  `NIP` varchar(10) NOT NULL,
+  `pesel` varchar(11) NOT NULL,
+  `nip` varchar(10) NOT NULL,
   `posada` enum('Kierownik','Sprzedawca','Magazynier') DEFAULT NULL,
   `dataZatrudnienia` date NOT NULL,
   `stawka` float NOT NULL,
@@ -60,17 +67,24 @@ CREATE TABLE IF NOT EXISTS `Pracownik` (
 
 CREATE TABLE IF NOT EXISTS `Towar` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `Nazwa` varchar(50) NOT NULL,
+  `nazwa` varchar(50) NOT NULL,
   `opis` varchar(150) DEFAULT NULL,
   `cena` float NOT NULL,
   `ilosc` int(11) NOT NULL,
   `idKategorii` int(8) unsigned NOT NULL,
   FOREIGN KEY (idKategorii) REFERENCES Kategoria(id),
-  `stawkaVAT` enum('0','3','7','14','22') NOT NULL,
+  `vat` enum('0','3','7','14','22') NOT NULL,
   `cenaZakupu` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `Towar` (`id`, `Nazwa`, `opis`, `cena`, `ilosc`, `idKategorii`, `vat`, `cenaZakupu`) VALUES
+(1, 'Wódka', '0.5L', '22.45', '66', '1', '7' , '22.45'),
+(2, 'Ogórki', '1L', '5', '10', '1', '22' , '5'),
+(3, 'Myszka', 'Logitech', '69.50', '8', '2', '22' , '69.50'),
+(4, 'Klawiatura', 'Genius', '30.15', '12', '2', '22', '30.15'),
+(5, 'Glośniki', 'Microlab', '399', '3', '2', '14', '399'),
+(6, 'Wiatrówka', 'Ceska Zbrojovka', '459', '2', '3', '0', '459');
 
 CREATE TABLE IF NOT EXISTS `Sprzedaz` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -110,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `Pozycja_sprzedazy` (
   FOREIGN KEY (idTowaru) REFERENCES Towar(id),
   `ilosc` int(11) NOT NULL,
   `cena` float NOT NULL,
-  `stawkaVAT` enum('0','3','7','14','22') NOT NULL,
+  `vat` enum('0','3','7','14','22') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

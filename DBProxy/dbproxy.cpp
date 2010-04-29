@@ -26,7 +26,7 @@ bool DBProxy::polacz()
 
 unsigned int DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar )
 {
-    QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, stawkaVAT)"
+    QString queryString = QString( "INSERT INTO Towar (id, nazwa, opis, cena, ilosc, vat)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5);" )
             .arg( nawiasy( towar.nazwa ) )
             .arg( nawiasy( towar.opis ) )
@@ -54,7 +54,7 @@ unsigned int DBProxy::dodajTowarSklep(const TowarSklep &towar)
 
 unsigned int DBProxy::dodajSklep(const Sklep &sklep)
 {
-    QString queryString = QString( "INSERT INTO Sklep (id, REGON, nazwa, upust, login, haslo,"
+    QString queryString = QString( "INSERT INTO Sklep (id, regon, nazwa, upust, login, haslo,"
                                    "ulica, miejscowosc, kodPocztowy, telefon, fax, email)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11);" )
             .arg( nawiasy( sklep.REGON ) )
@@ -195,7 +195,7 @@ unsigned int DBProxy::dodajKategorie(const Kategoria &kategoria)
 
 unsigned int DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
 {
-    QString queryString = QString( "INSERT INTO Hurtownia (id, REGON, nazwa, upust,"
+    QString queryString = QString( "INSERT INTO Hurtownia (id, regon, nazwa, upust,"
                                    "ulica, miejscowosc, kodPocztowy, telefon, fax, email)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7, %8, %9);" )
             .arg( nawiasy( hurtownia.REGON ) )
@@ -239,7 +239,7 @@ QString DBProxy::dataNaString(const QDate &data)
 
 unsigned int DBProxy::dodajKlienta(const Klient &klient)
 {
-    QString queryString = QString( "INSERT INTO Klient (id, REGON, ulica, miejscowosc,"
+    QString queryString = QString( "INSERT INTO Klient (id, regon, ulica, miejscowosc,"
                                    "kodPocztowy, telefon, nazwa)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6);" )
             .arg( nawiasy( klient.regon ) )

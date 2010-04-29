@@ -1,8 +1,11 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+﻿SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+# zmienione kodowanie na UTF-8
+# zmienione atrybuty: `vat`, `regon`
 
 CREATE TABLE IF NOT EXISTS `Sklep` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `REGON` varchar(9) NOT NULL,
+  `regon` varchar(9) NOT NULL,
   `nazwa` varchar(30) NOT NULL,
   `upust` float DEFAULT NULL,
   `login` varchar(12) NOT NULL,
@@ -22,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `Towar` (
   `opis` varchar(150) DEFAULT NULL,
   `cena` float NOT NULL,
   `ilosc` int(11) NOT NULL,
-  `stawkaVAT` enum('0','3','7','14','22') NOT NULL,
+  `vat` enum('0','3','7','14','22') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
