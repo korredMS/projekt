@@ -8,11 +8,11 @@ int main( int argc, char *argv[] ) {
     DBProxy db( NULL, "localhost", "Sklep", "root", "inutero" );
     db.polacz();
 
-    DBProxy::Kategoria kategoria( "kategoria" );
-    unsigned int idKategorii = db.dodajKategorie( kategoria );
+    QMap< DBProxy::Hurtownia::PoleBazy, QVariant > filtr;
+    filtr.insert( DBProxy::Hurtownia::Id, 5 );
+    QList< DBProxy::Hurtownia > hurtownie = db.pobierz< DBProxy::Hurtownia >( filtr );
 
-    DBProxy::TowarSklep towar( "myszki", "myszki", 1, 1, DBProxy::VAT3, 1, 1);
-    db.dodajTowarSklep( towar );
+    QList< DBProxy::TowarSklep > towary = db.pobierz< DBProxy::TowarSklep >();
 
     return app.exec();
 }

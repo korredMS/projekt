@@ -1,5 +1,40 @@
 #include "dbproxy.h"
 
+QStringList DBProxy::Hurtownia::polaBazy = QString( "id, regon, nazwa, upust, ulica, miejscowosc, kodPocztowy, telefon, fax, email" ).split( ", ");
+QStringList DBProxy::Sklep::polaBazy = QString( "id, regon, nazwa, upust, login, haslo, ulica, miejscowosc, kodPocztowy, telefon, fax, email" ).split( ", " );
+QStringList DBProxy::TowarHurtownia::polaBazy = QString( "id, nazwa, opis, cena, ilosc, vat" ).split( ", " );
+QStringList DBProxy::TowarSklep::polaBazy = QString( "id, nazwa, opis, cena, ilosc, idKategorii, vat, cenaZakupu" ).split( ", " );
+QStringList DBProxy::PozycjaZamowienia::polaBazy = QString( "id, idZamowienia, idTowaru, ilosc" ).split( ", " );
+QStringList DBProxy::PozycjaSprzedazy::polaBazy = QString( "id, idSprzedazy, idTowaru, ilosc, cena, vat" ).split( ", " );
+QStringList DBProxy::ZamowienieHurtownia::polaBazy = QString( "id, idSklepu, dataZlozenia, dataRealizacji, upust, status, nrFaktury" ).split( ", " );
+QStringList DBProxy::ZamowienieSklep::polaBazy = QString( "id, idHurtowni, dataZlozenia, dataRealizacji, status, nrFaktury, idPracownika" ).split( ", " );
+QStringList DBProxy::Sprzedaz::polaBazy = QString( "id, dataRealizacji, status, potwierdzenie, nrParagonu, idFaktury, idKlienta, idPracownika" ).split( ", " );
+QStringList DBProxy::Faktura::polaBazy = QString( "id, nrFaktury" ).split( ", " );
+QStringList DBProxy::Kategoria::polaBazy = QString( "id, nazwa" ).split( ", " );
+QStringList DBProxy::Klient::polaBazy = QString( "id, regon, ulica, miejscowosc, kodPocztowy, telefon, nazwa" ).split( ", " );
+QStringList DBProxy::Pracownik::polaBazy = QString( "id, nazwisko, PESEL, NIP, posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy, telefon, email" ).split( ", " );
+
+QStringList DBProxy::Rekord::polaUInt = QStringList() << "id" << "ilosc" << "idKategorii" << "idZamowienia"
+                                                      << "idTowaru" << "idSprzedazy" << "idSklepu" << "idHurtowni"
+                                                      << "idPracownika" << "idKlienta";
+QStringList DBProxy::Rekord::polaQDate = QStringList() << "dataZlozenia" << "dataRealizacji";
+QStringList DBProxy::Rekord::polaFloat = QStringList() << "upust" << "cena" << "cenaZakupu";
+QStringList DBProxy::Rekord::polaEnum = QStringList() << "vat" << "status" << "potwierdzenie" << "posada";
+
+QString DBProxy::Hurtownia::tabela = "Hurtownia";
+QString DBProxy::Sklep::tabela = "Sklep";
+QString DBProxy::TowarHurtownia::tabela = "Towar";
+QString DBProxy::TowarSklep::tabela = "Towar";
+QString DBProxy::PozycjaZamowienia::tabela = "Pozycja_zamowienia";
+QString DBProxy::PozycjaSprzedazy::tabela = "Pozycja_sprzedazy";
+QString DBProxy::ZamowienieHurtownia::tabela = "Zamowienie";
+QString DBProxy::ZamowienieSklep::tabela = "Zamowienie";
+QString DBProxy::Sprzedaz::tabela = "Sprzedaz";
+QString DBProxy::Faktura::tabela = "Faktura";
+QString DBProxy::Kategoria::tabela = "Kategoria";
+QString DBProxy::Klient::tabela = "Klient";
+QString DBProxy::Pracownik::tabela = "Pracownik";
+
 DBProxy::DBProxy(QObject *parent, const QString &host, const QString &dbName,
                  const QString &login, const QString &pass) :
     QObject(parent),
@@ -34,7 +69,7 @@ unsigned int DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar )
             .arg( liczbaNaString( towar.ilosc ) )
             .arg( nawiasy( liczbaNaString( towar.vat ) ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajTowarSklep(const TowarSklep &towar)
@@ -49,7 +84,7 @@ unsigned int DBProxy::dodajTowarSklep(const TowarSklep &towar)
             .arg( nawiasy( liczbaNaString( towar.vat ) ) )
             .arg( liczbaNaString( towar.cenaZakupu ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajSklep(const Sklep &sklep)
@@ -69,10 +104,10 @@ unsigned int DBProxy::dodajSklep(const Sklep &sklep)
             .arg( nawiasy( sklep.fax ) )
             .arg( nawiasy( sklep.email ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
-unsigned int DBProxy::execQuery(const QString &queryString)
+QVariant DBProxy::execQuery(const QString &queryString)
 {
     if( dodawanie && mBladDodawaniaRekordu )
         return 0;
@@ -87,8 +122,14 @@ unsigned int DBProxy::execQuery(const QString &queryString)
             emit bladDodawaniaRekordu();    // czy przekazywac cos?
         }
 
+        if( query.isSelect() )
+            return false;
+
         return 0;
     }
+
+    if( query.isSelect() )
+        return true;
 
     return query.lastInsertId().toUInt();
 }
@@ -114,7 +155,7 @@ unsigned int DBProxy::dodajZamowienieHurtownia(const ZamowienieHurtownia &zamowi
             .arg( nawiasy( statusNaString( zamowienie.status) ) )
             .arg( nawiasy( zamowienie.nrFaktury ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajZamowienieSklep(const ZamowienieSklep &zamowienie) {
@@ -128,7 +169,7 @@ unsigned int DBProxy::dodajZamowienieSklep(const ZamowienieSklep &zamowienie) {
             .arg( nawiasy( zamowienie.nrFaktury ) )
             .arg( liczbaNaString( zamowienie.idPracownika ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
@@ -139,7 +180,7 @@ unsigned int DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
             .arg( liczbaNaString( pozycja.idTowaru ) )
             .arg( liczbaNaString( pozycja.ilosc ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajPozycjeSprzedazy(const PozycjaSprzedazy &pozycja)
@@ -152,7 +193,7 @@ unsigned int DBProxy::dodajPozycjeSprzedazy(const PozycjaSprzedazy &pozycja)
             .arg( liczbaNaString( pozycja.cena ) )
             .arg( liczbaNaString( pozycja.vat ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 QString DBProxy::statusNaString(StatusZamowienia status)
@@ -181,7 +222,7 @@ unsigned int DBProxy::dodajFakture(const Faktura &faktura)
                                    "VALUES (NULL, %1);" )
             .arg( nawiasy( faktura.nr ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajKategorie(const Kategoria &kategoria)
@@ -190,7 +231,7 @@ unsigned int DBProxy::dodajKategorie(const Kategoria &kategoria)
                                    "VALUES (NULL, %1);" )
             .arg( nawiasy( kategoria.nazwa ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
@@ -208,7 +249,7 @@ unsigned int DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
             .arg( nawiasy( hurtownia.fax ) )
             .arg( nawiasy( hurtownia.email ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 unsigned int DBProxy::dodajPracownika(const Pracownik &pracownik)
@@ -229,7 +270,7 @@ unsigned int DBProxy::dodajPracownika(const Pracownik &pracownik)
             .arg( nawiasy( pracownik.telefon ) )
             .arg( nawiasy( pracownik.email ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 QString DBProxy::dataNaString(const QDate &data)
@@ -249,7 +290,7 @@ unsigned int DBProxy::dodajKlienta(const Klient &klient)
             .arg( nawiasy( klient.telefon ) )
             .arg( nawiasy( klient.nazwa ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 
@@ -265,7 +306,7 @@ unsigned int DBProxy::dodajSprzedaz(const Sprzedaz &sprzedaz) {
             .arg( liczbaNaString( sprzedaz.idKlienta ) )
             .arg( liczbaNaString( sprzedaz.idPracownika ) );
 
-    return execQuery( queryString );
+    return execQuery( queryString ).toUInt();
 }
 
 QString DBProxy::potwierdzenieNaString(Potwierdzenie potwierdzenie)
@@ -302,7 +343,32 @@ void DBProxy::zakonczDodawanie()
 void DBProxy::usunRekord(const Rekord *rekord)
 {
     QString queryString = QString( "DELETE FROM %1 WHERE id=%2;" )
-                            .arg( rekord->tabela )
-                            .arg( rekord->id );
+                          .arg( rekord->tabela )
+                          .arg( rekord->id );
     execQuery( queryString );
+}
+
+QString DBProxy::vatNaString(StawkaVAT vat)
+{
+    switch( vat ) {
+        case VAT0:  return "VAT0";
+        case VAT3:  return "VAT3";
+        case VAT7:  return "VAT7";
+        case VAT14:  return "VAT14";
+        case VAT22:  return "VAT22";
+    }
+
+    return QString();
+}
+
+QString DBProxy::relacjaNaString( DBProxy::Relacja relacja){
+    switch( relacja ) {
+        case Rowne:         return " = ";
+        case Wieksze:       return " > ";
+        case WiekszeRowne:  return " >= ";
+        case Mniejsze:      return " < ";
+        case MniejszeRowne: return " <= ";
+        case Zawiera:       return " LIKE ";
+        default:            return " = ";
+    }
 }

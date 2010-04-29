@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>469</height>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>12</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -471,6 +471,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>idKategorii</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -492,6 +499,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_42"/>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_51"/>
             </item>
            </layout>
           </item>

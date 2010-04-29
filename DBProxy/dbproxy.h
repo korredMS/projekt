@@ -35,20 +35,26 @@ public:
         PotwierdzenieFaktura
     };
 
+    enum Relacja {
+        Rowne, Wieksze, WiekszeRowne, Mniejsze, MniejszeRowne, Zawiera
+    };
+
     struct Rekord {
-        Rekord( const QString &tabela, const QString &tablicaPolBazy, unsigned int id = 0 )
+        Rekord( const QString &tabela, unsigned int id = 0 )
         {
             this->id = id;
             this->tabela = tabela;
-
-            mTablicaPolBazy = tablicaPolBazy.split( ", " );
         }
 
         unsigned int id;
+
         QString tabela;
 
-    private:
-        QStringList mTablicaPolBazy;
+        // pozniej statycznie
+        static QStringList polaEnum;
+        static QStringList polaUInt;
+        static QStringList polaFloat;
+        static QStringList polaQDate;
     };
 
     struct HurtowniaProto {
@@ -77,20 +83,31 @@ public:
                    float upust = 0, unsigned int id = 0 )
                        : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax, email, upust ),
                          Rekord( "Hurtownia",
-                                 "id, regon, nazwa, upust, ulica, miejscowosc, kodPocztowy, telefon, fax, email",
                                  id )
+        {}
+
+        Hurtownia( const QSqlQuery &query )
+            : HurtowniaProto( query.value( 2 ).toString(), query.value( 1 ).toString(),
+                              query.value( 4 ).toString(), query.value( 5 ).toString(),
+                              query.value( 6 ), query.value( 7 ), query.value( 8 ), query.value( 9 ),
+                              query.value( 3 ) ),
+              Rekord( "Hurtownia",
+                      query.value( 0 ) )
         {
-            this->nazwa = nazwa;
-            this->REGON = regon;
-            this->ulica = ulica;
-            this->miejscowosc = miejscowosc;
-            this->kodPocztowy = kodPocztowy;
-            this->telefon = telefon;
-            this->fax = fax;
-            this->email = email;
-            this->upust = upust;
+            this->id = query.value( 0 );
+            this->regon = query.value( 1 );
+            this->nazwa = query.value( 2 );
+            this->upust = query.value( 3 );
+            this->ulica = query.value( 4 );
+            this->miejscowosc = query.value( 5 );
+            this->kodPocztowy = query.value( 6 );
+            this->telefon = query.value( 7 );
+            this->fax = query.value( 8 );
+            this->email = query.value( 9 );
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         QString nazwa, REGON, ulica, miejscowosc, kodPocztowy, telefon, fax, email;
         float upust;
 
@@ -107,13 +124,14 @@ public:
                    : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax,
                                      email, upust ),
                      Rekord( "Sklep",
-                             "id, regon, nazwa, upust, login, haslo, ulica, miejscowosc, kodPocztowy, telefon, fax, email",
                              id )
         {
             this->login = login;
             this->haslo = haslo;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         QString login, haslo;
 
         enum PoleBazy {
@@ -142,9 +160,11 @@ public:
                         StawkaVAT vat, unsigned int id = 0 )
                             : Towar( nazwa, opis, ilosc, cena, vat ),
                               Rekord( "Towar",
-                                      "id, nazwa, opis, cena, ilosc, vat",
                                       id )
         {}
+
+        static QString tabela;
+        static QStringList polaBazy;
 
         enum PoleBazy {
             Id, Nazwa, Opis, Cena, Ilosc, VAT
@@ -155,14 +175,14 @@ public:
         TowarSklep( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
                     StawkaVAT vat, float cenaZakupu, unsigned int idKategorii, unsigned int id = 0 )
                             : Towar( nazwa, opis, ilosc, cena, vat ),
-                              Rekord( "Towar",
-                                      "id, nazwa, opis, cena, ilosc, idKategorii, vat, cenaZakupu",
-                                      id )
+                              Rekord( "Towar", id )
         {
             this->cenaZakupu = cenaZakupu;
             this->idKategorii = idKategorii;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         float cenaZakupu;
         unsigned int idKategorii;
 
@@ -186,13 +206,13 @@ public:
         PozycjaZamowienia( unsigned int idTowaru, size_t ilosc, unsigned int idZamowienia,
                            unsigned int id = 0 )
                                : Pozycja( idTowaru, ilosc ),
-                                 Rekord( "Pozycja_zamowienia",
-                                         "id, idZamowienia, idTowaru, ilosc",
-                                         id )
+                                 Rekord( "Pozycja_zamowienia", id )
         {
             this->idZamowienia = idZamowienia;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         unsigned int idZamowienia;
 
         enum PoleBazy {
@@ -204,15 +224,15 @@ public:
         PozycjaSprzedazy( unsigned int idTowaru, size_t ilosc, unsigned int idSprzedazy,
                           float cena, StawkaVAT vat, unsigned int id = 0 )
                                : Pozycja( idTowaru, ilosc ),
-                                 Rekord( "Pozycja_sprzedazy",
-                                         "id, idSprzedazy, idTowaru, ilosc, cena, vat",
-                                         id )
+                                 Rekord( "Pozycja_sprzedazy", id )
         {
             this->idSprzedazy = idSprzedazy;
             this->cena = cena;
             this->vat = vat;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         unsigned int idSprzedazy;
         float cena;
         StawkaVAT vat;
@@ -241,15 +261,15 @@ public:
                              const QString &nrFaktury, const QDate dataRealizacji = QDate(), float upust = 0.0,
                              StatusZamowienia status = Oczekujace, unsigned int id = 0 )
                                  : Transakcja( dataRealizacji, upust, status ),
-                                   Rekord( "Zamowienie",
-                                           "id, idSklepu, dataZlozenia, dataRealizacji, upust, status, nrFaktury",
-                                           id )
+                                   Rekord( "Zamowienie", id )
         {
             this->idSklepu = idSklepu;
             this->dataZlozenia = dataZlozenia;
             this->nrFaktury = nrFaktury;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         unsigned int idSklepu;
         QDate dataZlozenia;
         QString nrFaktury;
@@ -264,9 +284,7 @@ public:
                          const QString &nrFaktury, const QDate dataRealizacji = QDate(), float upust = 0.0,
                          StatusZamowienia status = Oczekujace, unsigned int id = 0 )
             : Transakcja( dataRealizacji, upust, status ),
-              Rekord( "Zamowienie",
-                      "id, idHurtowni, dataZlozenia, dataRealizacji, status, nrFaktury, idPracownika",
-                      id )
+              Rekord( "Zamowienie", id )
         {
             this->idHurtowni = idHurtowni;
             this->idPracownika = idPracownika;
@@ -274,6 +292,8 @@ public:
             this->dataZlozenia = dataZlozenia;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         unsigned int idPracownika, idHurtowni;
         QDate dataZlozenia;
         QString nrFaktury;
@@ -289,9 +309,7 @@ public:
                   const QDate dataRealizacji = QDate(), float upust = 0.0,
                   StatusZamowienia status = Oczekujace, unsigned int id = 0 )
             : Transakcja( dataRealizacji, upust, status ),
-              Rekord( "Sprzedaz",
-                      "id, dataRealizacji, status, potwierdzenie, nrParagonu, idFaktury, idKlienta, idPracownika",
-                      id )
+              Rekord( "Sprzedaz", id )
         {
             this->potwierdzenie = potwierdzenie;
             this->nrParagonu = nrParagonu;
@@ -300,6 +318,8 @@ public:
             this->idPracownika = idPracownika;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         Potwierdzenie potwierdzenie;
         QString nrParagonu;
         unsigned int idFaktury, idKlienta, idPracownika;
@@ -311,13 +331,13 @@ public:
 
     struct Faktura : public Rekord {
         Faktura( const QString &nr, unsigned int id = 0 )
-            : Rekord( "Faktura",
-                      "id, nrFaktury",
-                      id )
+            : Rekord( "Faktura", id )
         {
             this->nr = nr;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         QString nr;
 
         enum PoleBazy {
@@ -327,13 +347,13 @@ public:
 
     struct Kategoria : public Rekord {
         Kategoria( const QString &nazwa, unsigned int id = 0 )
-            : Rekord( "Kategoria",
-                      "id, nazwa",
-                      id )
+            : Rekord( "Kategoria", id )
         {
             this->nazwa = nazwa;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         QString nazwa;
 
         enum PoleBazy {
@@ -361,13 +381,13 @@ public:
                 const QString &kodPocztowy, const QString &telefon, const QString &email,
                 unsigned int id = 0 )
                     : Czlowiek( nazwa, ulica, miejscowosc, kodPocztowy, telefon, email ),
-                      Rekord( "Klient",
-                              "id, regon, ulica, miejscowosc, kodPocztowy, telefon, nazwa",
-                              id )
+                      Rekord( "Klient", id )
         {
             this->regon = regon;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         QString regon;
 
         enum PoleBazy {
@@ -383,9 +403,7 @@ public:
                    const QString &login, const QString &haslo,
                    unsigned int id = 0 )
                     : Czlowiek( nazwa, ulica, miejscowosc, kodPocztowy, telefon, email ),
-                      Rekord( "Pracownik",
-                              "id, nazwisko, PESEL, NIP, posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy, telefon, email",
-                              id )
+                      Rekord( "Pracownik", id )
         {
             this->pesel = pesel,
             this->nip = nip;
@@ -397,6 +415,8 @@ public:
             this->haslo = haslo;
         }
 
+        static QString tabela;
+        static QStringList polaBazy;
         QString pesel, nip, login, haslo;
         Posada posada;
         QDate dataZatrudnienia;
@@ -430,15 +450,66 @@ public:
     unsigned int dodajZamowienieHurtownia( const ZamowienieHurtownia &zamowienie );
     unsigned int dodajZamowienieSklep( const ZamowienieSklep &zamowienie );
 
-    template< typename T >
-    QList< T > pobierz( QMap< QString, QString > filtr ) {
-        QList< T > lista;
+    template< typename T > QList< T > pobierz() {
+        return pobierz< T >( QMap< typename T::PoleBazy, QVariant >() );
+    }
 
-        QString queryString = QString( "SELECT * FROM %1" );
-        QMap< QString, QString >::iterator it = filtr.begin();
-        for( it = filtr.begin(); it != filtr.end(); ++it ) {
-            queryString += QString( );
+    template< typename T > QList< T > pobierz( const QMap< typename T::PoleBazy, QVariant > &filtr,
+                                               Relacja relacja = Rowne )
+    {
+        QString queryString = QString( "SELECT " + T::polaBazy.join( ", " ) + " FROM %1" )
+                              .arg( T::tabela );
+
+        if( !filtr.empty() ) {
+            queryString += " WHERE ";
+
+            typename QMap< typename T::PoleBazy, QVariant >::const_iterator it = filtr.begin();
+            for( it = filtr.begin(); it != filtr.end(); ++it ) {
+                QString poleStr = T::polaBazy[ it.key() ];
+                QVariant wartosc = it.value();
+
+                queryString += poleStr;
+                queryString += relacjaNaString( relacja );
+
+                if( Rekord::polaUInt.contains( poleStr ) )
+                    queryString += liczbaNaString( wartosc.toUInt() );
+
+                else if( Rekord::polaFloat.contains( poleStr ) )
+                    queryString += liczbaNaString( wartosc.toFloat() );
+
+                else if( Rekord::polaQDate.contains( poleStr ) )
+                    queryString += nawiasy( dataNaString( wartosc.toDate() ) );
+
+                else if( Rekord::polaEnum.contains( poleStr ) ) {
+                    if( poleStr == "vat" )
+                        queryString += nawiasy( vatNaString( wartosc.value< StawkaVAT >() ) );
+
+                    if( poleStr == "status" )
+                        queryString += nawiasy( statusNaString( wartosc.value< StatusZamowienia >() ) );
+
+                    if( poleStr == "potwierdzenie" )
+                        queryString += nawiasy( potwierdzenieNaString( wartosc.value< Potwierdzenie >() ) );
+
+                    if( poleStr == "posada" )
+                        queryString += nawiasy( posadaNaString( wartosc.value< Posada >() ) );
+                }
+
+                else
+                    queryString += nawiasy( wartosc.toString() );
+            }
         }
+        queryString += ";";
+
+        QSqlQuery query( db );
+
+        QList< T > lista;
+        if( query.exec( queryString ) ) {
+            while( query.next() ) {
+                lista.append( T( query ) );
+            }
+        }
+
+        return lista;
     }
 
 signals:
@@ -449,13 +520,15 @@ public slots:
 
 private:
     QString dataNaString( const QDate &data );
-    unsigned int execQuery( const QString &query );
+    QVariant execQuery( const QString &query );
     QString liczbaNaString( double liczba );
     QString nawiasy( const QString &string );
     QString posadaNaString( Posada posada );
     QString potwierdzenieNaString( Potwierdzenie potwierdzenie );
+    QString relacjaNaString( Relacja relacja );
     QString statusNaString( StatusZamowienia status );
     void usunRekord( const Rekord *rekord );
+    QString vatNaString( StawkaVAT vat );
 
     QSqlDatabase db;
 
@@ -468,5 +541,10 @@ private:
 private slots:
     void debug( QString str );
 };
+
+Q_DECLARE_METATYPE( DBProxy::Posada );
+Q_DECLARE_METATYPE( DBProxy::Potwierdzenie );
+Q_DECLARE_METATYPE( DBProxy::StatusZamowienia );
+Q_DECLARE_METATYPE( DBProxy::StawkaVAT );
 
 #endif // DBPROXY_H

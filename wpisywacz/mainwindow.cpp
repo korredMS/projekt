@@ -136,7 +136,8 @@ void MainWindow::on_pushButton_7_clicked()
                                    ui->lineEdit_39->text().toUInt(),
                                    ui->lineEdit_40->text().toFloat(),
                                    (DBProxy::StawkaVAT)ui->lineEdit_41->text().toInt(),
-                                   ui->lineEdit_42->text().toFloat() );
+                                   ui->lineEdit_42->text().toFloat(),
+                                   ui->lineEdit_51->text().toUInt() );
 
     unsigned int id;
     if( ( id = db->dodajTowarSklep( towar ) ) != 0 )
