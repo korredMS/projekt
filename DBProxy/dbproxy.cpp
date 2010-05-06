@@ -107,31 +107,43 @@ unsigned int DBProxy::dodajSklep(const Sklep &sklep)
     return execQuery( queryString ).toUInt();
 }
 
-QVariant DBProxy::execQuery(const QString &queryString)
+QVariant DBProxy::execQuery(const QString &queryString, QSqlQuery *argQuery )
 {
     if( dodawanie && mBladDodawaniaRekordu )
         return 0;
 
-    QSqlQuery query( db );
+    QSqlQuery *query = argQuery;
+    if( !query )
+        query = new QSqlQuery( db );
 
-    if( !query.exec( queryString ) ) {
-        emit log( query.lastError().text() );
+    if( !query->exec( queryString ) ) {
+        emit log( query->lastError().text() );
 
         if( dodawanie ) {
             mBladDodawaniaRekordu = true;
             emit bladDodawaniaRekordu();    // czy przekazywac cos?
         }
 
-        if( query.isSelect() )
+        if( query->isSelect() )
             return false;
 
         return 0;
     }
 
-    if( query.isSelect() )
+    if( query->isSelect() ) {
+        if( !argQuery )
+            delete query;
+
         return true;
 
-    return query.lastInsertId().toUInt();
+    } else {
+        unsigned int id = query->lastInsertId().toUInt();
+
+        if( !argQuery )
+            delete query;
+
+        return id;
+    }
 }
 
 QString DBProxy::nawiasy(const QString &string)
@@ -371,4 +383,13 @@ QString DBProxy::relacjaNaString( DBProxy::Relacja relacja){
         case Zawiera:       return " LIKE ";
         default:            return " = ";
     }
+}
+
+DBProxy::StawkaVAT DBProxy::stringNaVat(const QString &string)
+{
+    if( string == "VAT0" )
+        return VAT0;
+
+    // domyœlnie
+    return VAT0;
 }

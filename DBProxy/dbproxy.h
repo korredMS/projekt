@@ -40,12 +40,14 @@ public:
     };
 
     struct Rekord {
+    protected:
         Rekord( const QString &tabela, unsigned int id = 0 )
         {
             this->id = id;
             this->tabela = tabela;
         }
 
+    public:
         unsigned int id;
 
         QString tabela;
@@ -58,6 +60,7 @@ public:
     };
 
     struct HurtowniaProto {
+    protected:
         HurtowniaProto( const QString &nazwa, const QString &regon, const QString &ulica, const QString &miejscowosc,
                    const QString &kodPocztowy, const QString &telefon, const QString &fax, const QString &email,
                    float upust = 0 )
@@ -73,6 +76,9 @@ public:
             this->upust = upust;
         }
 
+        HurtowniaProto() {}
+
+    public:
         QString nazwa, REGON, ulica, miejscowosc, kodPocztowy, telefon, fax, email;
         float upust;
     };
@@ -82,28 +88,22 @@ public:
                    const QString &kodPocztowy, const QString &telefon, const QString &fax, const QString &email,
                    float upust = 0, unsigned int id = 0 )
                        : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax, email, upust ),
-                         Rekord( "Hurtownia",
-                                 id )
+                         Rekord( "Hurtownia", id )
         {}
 
         Hurtownia( const QSqlQuery &query )
-            : HurtowniaProto( query.value( 2 ).toString(), query.value( 1 ).toString(),
-                              query.value( 4 ).toString(), query.value( 5 ).toString(),
-                              query.value( 6 ), query.value( 7 ), query.value( 8 ), query.value( 9 ),
-                              query.value( 3 ) ),
-              Rekord( "Hurtownia",
-                      query.value( 0 ) )
+            : Rekord( "Hurtownia", query.value( 0 ).toUInt() )
         {
-            this->id = query.value( 0 );
-            this->regon = query.value( 1 );
-            this->nazwa = query.value( 2 );
-            this->upust = query.value( 3 );
-            this->ulica = query.value( 4 );
-            this->miejscowosc = query.value( 5 );
-            this->kodPocztowy = query.value( 6 );
-            this->telefon = query.value( 7 );
-            this->fax = query.value( 8 );
-            this->email = query.value( 9 );
+            nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+            REGON = query.value( polaBazy.indexOf( "regon" ) ).toString();
+            ulica = query.value( polaBazy.indexOf( "ulica" ) ).toString();
+            miejscowosc = query.value( polaBazy.indexOf( "miejscowosc" ) ).toString();
+            kodPocztowy = query.value( polaBazy.indexOf( "kodPocztowy" ) ).toString();
+            telefon = query.value( polaBazy.indexOf( "telefon" ) ).toString();
+            fax = query.value( polaBazy.indexOf( "fax" ) ).toString();
+            email = query.value( polaBazy.indexOf( "email" ) ).toString();
+            upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
+            id = query.value( polaBazy.indexOf( "id" ) ).toUInt();
         }
 
         static QString tabela;
@@ -123,11 +123,27 @@ public:
                const QString &haslo, float upust = 0, unsigned int id = 0 )
                    : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax,
                                      email, upust ),
-                     Rekord( "Sklep",
-                             id )
+                     Rekord( "Sklep", id )
         {
             this->login = login;
             this->haslo = haslo;
+        }
+
+        Sklep( const QSqlQuery &query )
+            : Rekord( "Sklep", query.value( 0 ).toUInt() )
+        {
+            nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+            REGON = query.value( polaBazy.indexOf( "regon" ) ).toString();
+            ulica = query.value( polaBazy.indexOf( "ulica" ) ).toString();
+            miejscowosc = query.value( polaBazy.indexOf( "miejscowosc" ) ).toString();
+            kodPocztowy = query.value( polaBazy.indexOf( "kodPocztowy" ) ).toString();
+            telefon = query.value( polaBazy.indexOf( "telefon" ) ).toString();
+            fax = query.value( polaBazy.indexOf( "fax" ) ).toString();
+            email = query.value( polaBazy.indexOf( "email" ) ).toString();
+            upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
+            id = query.value( polaBazy.indexOf( "id" ) ).toUInt();
+            login = query.value( polaBazy.indexOf( "login" ) ).toString();
+            haslo = query.value( polaBazy.indexOf( "haslo" ) ).toString();
         }
 
         static QString tabela;
@@ -140,6 +156,7 @@ public:
     };
 
     struct Towar {
+    protected:
         Towar( const QString &nazwa, const QString &opis, size_t ilosc, float cena, StawkaVAT vat )
         {
             this->nazwa = nazwa;
@@ -149,11 +166,14 @@ public:
             this->vat = vat;
         }
 
+        Towar() {}
+
+    public:
         QString nazwa, opis;
         size_t ilosc;
         float cena;
         StawkaVAT vat;
-    };
+};
 
     struct TowarHurtownia : public Towar, Rekord {
         TowarHurtownia( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
@@ -162,6 +182,16 @@ public:
                               Rekord( "Towar",
                                       id )
         {}
+
+        TowarHurtownia( const QSqlQuery &query )
+            : Rekord( "Towar", query.value( 0 ).toUInt() )
+        {
+            nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+            opis = query.value( polaBazy.indexOf( "opis" ) ).toString();
+            ilosc = query.value( polaBazy.indexOf( "ilosc" ) ).toUInt();
+            cena = query.value( polaBazy.indexOf( "cena" ) ).toFloat();
+            vat = stringNaVat( query.value( polaBazy.indexOf( "vat" ) ).toString() );
+        }
 
         static QString tabela;
         static QStringList polaBazy;
@@ -450,16 +480,13 @@ public:
     unsigned int dodajZamowienieHurtownia( const ZamowienieHurtownia &zamowienie );
     unsigned int dodajZamowienieSklep( const ZamowienieSklep &zamowienie );
 
-    template< typename T > QList< T > pobierz() {
-        return pobierz< T >( QMap< typename T::PoleBazy, QVariant >() );
-    }
-
-    template< typename T > QList< T > pobierz( const QMap< typename T::PoleBazy, QVariant > &filtr,
+    template< typename T > QList< T > pobierz( const QMap< typename T::PoleBazy, QVariant > &filtr = QMap< typename T::PoleBazy, QVariant >(),
                                                Relacja relacja = Rowne )
     {
         QString queryString = QString( "SELECT " + T::polaBazy.join( ", " ) + " FROM %1" )
                               .arg( T::tabela );
 
+        // na razie tylko jeden argument, trzeba tez dodac wybor AND i OR
         if( !filtr.empty() ) {
             queryString += " WHERE ";
 
@@ -503,7 +530,7 @@ public:
         QSqlQuery query( db );
 
         QList< T > lista;
-        if( query.exec( queryString ) ) {
+        if( execQuery( queryString, &query ).toBool() ) {
             while( query.next() ) {
                 lista.append( T( query ) );
             }
@@ -519,8 +546,10 @@ signals:
 public slots:
 
 private:
+    static StawkaVAT stringNaVat( const QString &string );
+
     QString dataNaString( const QDate &data );
-    QVariant execQuery( const QString &query );
+    QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );
     QString liczbaNaString( double liczba );
     QString nawiasy( const QString &string );
     QString posadaNaString( Posada posada );
