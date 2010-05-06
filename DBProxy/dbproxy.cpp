@@ -12,7 +12,7 @@ QStringList DBProxy::Sprzedaz::polaBazy = QString( "id, dataRealizacji, status, 
 QStringList DBProxy::Faktura::polaBazy = QString( "id, nrFaktury" ).split( ", " );
 QStringList DBProxy::Kategoria::polaBazy = QString( "id, nazwa" ).split( ", " );
 QStringList DBProxy::Klient::polaBazy = QString( "id, regon, ulica, miejscowosc, kodPocztowy, telefon, nazwa" ).split( ", " );
-QStringList DBProxy::Pracownik::polaBazy = QString( "id, nazwisko, PESEL, NIP, posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy, telefon, email" ).split( ", " );
+QStringList DBProxy::Pracownik::polaBazy = QString( "id, nazwa, pesel, nip, posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy, telefon, email" ).split( ", " );
 
 QStringList DBProxy::Rekord::polaUInt = QStringList() << "id" << "ilosc" << "idKategorii" << "idZamowienia"
                                                       << "idTowaru" << "idSprzedazy" << "idSklepu" << "idHurtowni"
@@ -392,4 +392,19 @@ DBProxy::StawkaVAT DBProxy::stringNaVat(const QString &string)
 
     // domyœlnie
     return VAT0;
+}
+
+DBProxy::Posada DBProxy::stringNaPosade(const QString &string)
+{
+    if( string == "Kierownik" )
+        return Kierownik;
+
+    if( string == "Sprzedawca" )
+        return Sprzedawca;
+
+    if( string == "Magazynier" )
+        return Magazynier;
+
+    // domyœlnie
+    return Sprzedawca;
 }

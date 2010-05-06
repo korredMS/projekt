@@ -404,6 +404,9 @@ public:
         }
 
         QString nazwa, ulica, miejscowosc, kodPocztowy, telefon, email;
+
+    protected:
+        Czlowiek() {}
     };
 
     struct Klient : public Czlowiek, Rekord {
@@ -443,6 +446,24 @@ public:
             this->stawka = stawka;
             this->login = login;
             this->haslo = haslo;
+        }
+
+        Pracownik( const QSqlQuery &query )
+            : Rekord( "Pracownik", query.value( 0 ).toUInt() )
+        {
+            nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+            pesel = query.value( polaBazy.indexOf( "pesel" ) ).toString();
+            dataZatrudnienia = query.value( polaBazy.indexOf( "dataZatrudnienia" ) ).toDate();
+            nip = query.value( polaBazy.indexOf( "nip" ) ).toString();
+            posada = stringNaPosade( query.value( polaBazy.indexOf( "posada" ) ).toString() );
+            stawka = query.value( polaBazy.indexOf( "stawka" ) ).toFloat();
+            ulica = query.value( polaBazy.indexOf( "ulica" ) ).toString();
+            miejscowosc = query.value( polaBazy.indexOf( "miejscowosc" ) ).toString();
+            kodPocztowy = query.value( polaBazy.indexOf( "kodPocztowy" ) ).toString();
+            telefon = query.value( polaBazy.indexOf( "telefon" ) ).toString();
+            email = query.value( polaBazy.indexOf( "email" ) ).toString();
+            login = query.value( polaBazy.indexOf( "login" ) ).toString();
+            haslo = query.value( polaBazy.indexOf( "haslo" ) ).toString();
         }
 
         static QString tabela;
@@ -547,6 +568,7 @@ public slots:
 
 private:
     static StawkaVAT stringNaVat( const QString &string );
+    static Posada stringNaPosade( const QString &string );
 
     QString dataNaString( const QDate &data );
     QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );
