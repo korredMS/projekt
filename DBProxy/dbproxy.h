@@ -10,6 +10,7 @@ class DBProxy : public QObject
     Q_OBJECT
 public:
     // klasy i enumeracje pomocnicze
+
     enum StawkaVAT {
         VAT0,
         VAT3 = 3,
@@ -37,6 +38,20 @@ public:
 
     enum Relacja {
         Rowne, Wieksze, WiekszeRowne, Mniejsze, MniejszeRowne, Zawiera
+    };
+
+    enum Dzialanie {
+        AND, OR
+    };
+
+    struct Filtr {
+        Filtr( const QVariant &wartosc, Relacja relacja = Rowne ) {
+            this->wartosc = wartosc;
+            this->relacja = relacja;
+        }
+
+        Relacja relacja;
+        QVariant wartosc;
     };
 
     struct Rekord {
@@ -599,23 +614,27 @@ public:
     unsigned int dodajZamowienieHurtownia( const ZamowienieHurtownia &zamowienie );
     unsigned int dodajZamowienieSklep( const ZamowienieSklep &zamowienie );
 
-    template< typename T > QList< T > pobierz( const QMap< typename T::PoleBazy, QVariant > &filtr = QMap< typename T::PoleBazy, QVariant >(),
-                                               Relacja relacja = Rowne )
+    template< typename T > QList< T > pobierz( const QMultiMap< typename T::PoleBazy, Filtr > &filtr = QMultiMap< typename T::PoleBazy, Filtr >(),
+                                               Dzialanie dzialanie = AND )
     {
         QString queryString = QString( "SELECT " + T::polaBazy.join( ", " ) + " FROM %1" )
                               .arg( T::tabela );
 
-        // na razie tylko jeden argument, trzeba tez dodac wybor AND i OR
         if( !filtr.empty() ) {
             queryString += " WHERE ";
 
-            typename QMap< typename T::PoleBazy, QVariant >::const_iterator it = filtr.begin();
+            QString dzialanieString = " OR ";
+            if( dzialanie == AND )
+                dzialanieString = " AND ";
+
+            typename QMultiMap< typename T::PoleBazy, Filtr >::const_iterator it = filtr.begin();
             for( it = filtr.begin(); it != filtr.end(); ++it ) {
                 QString poleStr = T::polaBazy[ it.key() ];
-                QVariant wartosc = it.value();
+                Filtr poleFiltru = it.value();
+                QVariant wartosc = it.value().wartosc;
 
                 queryString += poleStr;
-                queryString += relacjaNaString( relacja );
+                queryString += relacjaNaString( poleFiltru.relacja );
 
                 if( Rekord::polaUInt.contains( poleStr ) )
                     queryString += liczbaNaString( wartosc.toUInt() );
@@ -640,10 +659,17 @@ public:
                         queryString += nawiasy( posadaNaString( wartosc.value< Posada >() ) );
                 }
 
-                else
+                else {
+                    if( poleFiltru.relacja == Zawiera ) {
+                        wartosc = "%" + wartosc.toString() + "%";
+                    }
                     queryString += nawiasy( wartosc.toString() );
+                }
+
+                queryString += dzialanieString;
             }
         }
+        queryString.chop( 4 );
         queryString += ";";
 
         QSqlQuery query( db );
