@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>12</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -1407,13 +1407,6 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_127">
-              <property name="text">
-               <string>login</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QLabel" name="label_128">
               <property name="text">
                <string>haslo</string>
@@ -1456,9 +1449,6 @@
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_132"/>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_133"/>
             </item>
             <item>
              <widget class="QLineEdit" name="lineEdit_134"/>

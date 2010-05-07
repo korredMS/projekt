@@ -67,7 +67,6 @@ public:
 
         QString tabela;
 
-        // pozniej statycznie
         static QStringList polaEnum;
         static QStringList polaUInt;
         static QStringList polaFloat;
@@ -99,9 +98,10 @@ public:
     };
 
     struct Hurtownia : public HurtowniaProto, Rekord {
-        Hurtownia( const QString &nazwa, const QString &regon, const QString &ulica, const QString &miejscowosc,
-                   const QString &kodPocztowy, const QString &telefon, const QString &fax, const QString &email,
-                   float upust = 0, unsigned int id = 0 )
+        Hurtownia( const QString &nazwa, const QString &regon, const QString &ulica,
+                   const QString &miejscowosc, const QString &kodPocztowy, const QString &telefon,
+                   const QString &fax, const QString &email, float upust = 0,
+                   unsigned int id = 0 )
                        : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax, email, upust ),
                          Rekord( "Hurtownia", id )
         {}
@@ -123,8 +123,6 @@ public:
 
         static QString tabela;
         static QStringList polaBazy;
-        QString nazwa, REGON, ulica, miejscowosc, kodPocztowy, telefon, fax, email;
-        float upust;
 
         enum PoleBazy {
             Id, Regon, Nazwa, Upust, Ulica, Miejscowosc, KodPocztowy, Telefon, Fax, Email
@@ -587,7 +585,7 @@ public:
         float stawka;
 
         enum PoleBazy {
-            Id, Nazwisko, Pesel, Nip, PosadaPole, DataZatrudnienia, Stawka, Ulica, Miejscowosc, KodPocztowy, Telefon, Email
+            Id, Nazwisko, Pesel, Nip, PosadaPole, DataZatrudnienia, Stawka, Ulica, Miejscowosc, KodPocztowy, Telefon, Email, Haslo
         };
     };
 

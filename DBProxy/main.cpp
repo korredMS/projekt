@@ -23,6 +23,8 @@ int main( int argc, char *argv[] ) {
         qDebug() << towar.nazwa;
     }
 
+    DBProxy::Hurtownia h( "nazwa", "regon", "ul", "m", "k0", "te", "f", "em", 3.4 );
+    db.dodajHurtownie( h );
 
     return app.exec();
 }

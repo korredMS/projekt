@@ -66,7 +66,8 @@ void MainWindow::on_pushButton_clicked()
                                   ui->lineEdit_5->text(),
                                   ui->lineEdit_6->text(),
                                   ui->lineEdit_7->text(),
-                                  ui->lineEdit_8->text() );
+                                  ui->lineEdit_8->text(),
+                                  ui->lineEdit_9->text().toFloat() );
     unsigned int id;
     if( ( id = db->dodajHurtownie( hurtownia ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
@@ -290,7 +291,6 @@ void MainWindow::on_pushButton_41_clicked()
                                   ui->lineEdit_130->text(),
                                   ui->lineEdit_131->text(),
                                   ui->lineEdit_132->text(),
-                                  ui->lineEdit_133->text(),
                                   ui->lineEdit_134->text() );
     unsigned int id;
     if( ( id = db->dodajPracownika( pracownik ) ) != 0 )

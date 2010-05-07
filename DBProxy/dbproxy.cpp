@@ -12,7 +12,7 @@ QStringList DBProxy::Sprzedaz::polaBazy = QString( "id, dataRealizacji, status, 
 QStringList DBProxy::Faktura::polaBazy = QString( "id, nrFaktury" ).split( ", " );
 QStringList DBProxy::Kategoria::polaBazy = QString( "id, nazwa" ).split( ", " );
 QStringList DBProxy::Klient::polaBazy = QString( "id, regon, ulica, miejscowosc, kodPocztowy, telefon, nazwa" ).split( ", " );
-QStringList DBProxy::Pracownik::polaBazy = QString( "id, nazwa, pesel, nip, posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy, telefon, email" ).split( ", " );
+QStringList DBProxy::Pracownik::polaBazy = QString( "id, nazwa, pesel, nip, posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy, telefon, email, haslo" ).split( ", " );
 
 QStringList DBProxy::Rekord::polaUInt = QStringList() << "id" << "ilosc" << "idKategorii" << "idZamowienia"
                                                       << "idTowaru" << "idSprzedazy" << "idSklepu" << "idHurtowni"
@@ -74,7 +74,7 @@ unsigned int DBProxy::dodajTowarHurtownia(const TowarHurtownia &towar )
 
 unsigned int DBProxy::dodajTowarSklep(const TowarSklep &towar)
 {
-    QString queryString = QString( "INSERT INTO Towar (id, Nazwa, opis, cena, ilosc, idKategorii, stawkaVAT, cenaZakupu)"
+    QString queryString = QString( "INSERT INTO Towar (id, nazwa, opis, cena, ilosc, idKategorii, vat, cenaZakupu)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7);" )
             .arg( nawiasy( towar.nazwa ) )
             .arg( nawiasy( towar.opis ) )
@@ -197,7 +197,7 @@ unsigned int DBProxy::dodajPozycjeZamowienia(const PozycjaZamowienia &pozycja)
 
 unsigned int DBProxy::dodajPozycjeSprzedazy(const PozycjaSprzedazy &pozycja)
 {
-    QString queryString = QString( "INSERT INTO PozycjaSprzedazy (id, idSprzedazy, idTowaru, ilosc, cena, stawkaVAT)"
+    QString queryString = QString( "INSERT INTO Pozycja_sprzedazy (id, idSprzedazy, idTowaru, ilosc, cena, vat)"
                                    "VALUES (NULL, %1, %2, %3, %4, %5);" )
             .arg( liczbaNaString( pozycja.idSprzedazy ) )
             .arg( liczbaNaString( pozycja.idTowaru ) )
