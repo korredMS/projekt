@@ -49,9 +49,10 @@ CREATE TABLE IF NOT EXISTS `Klient` (
 
 CREATE TABLE IF NOT EXISTS `Pracownik` (
   `id`  int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `nazwa` varchar(25) NOT NULL,
   `pesel` varchar(11) NOT NULL,
   `nip` varchar(10) NOT NULL,
-  `posada` enum('Kierownik','Sprzedawca','Magazynier') DEFAULT NULL,
+  `posada` enum('Kierownik','Sprzedawca','Magazynier') NOT NULL,
   `dataZatrudnienia` date NOT NULL,
   `stawka` float NOT NULL,
   `ulica` varchar(30) NOT NULL,
@@ -59,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `Pracownik` (
   `kodPocztowy` varchar(5) NOT NULL,
   `telefon` varchar(9) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `login` varchar(20) NOT NULL,
   `haslo` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

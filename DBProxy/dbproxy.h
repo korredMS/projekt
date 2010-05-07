@@ -179,8 +179,7 @@ public:
         TowarHurtownia( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
                         StawkaVAT vat, unsigned int id = 0 )
                             : Towar( nazwa, opis, ilosc, cena, vat ),
-                              Rekord( "Towar",
-                                      id )
+                              Rekord( "Towar", id )
         {}
 
         TowarHurtownia( const QSqlQuery &query )
@@ -211,6 +210,18 @@ public:
             this->idKategorii = idKategorii;
         }
 
+        TowarSklep( const QSqlQuery &query )
+            : Rekord( "Towar", query.value( 0 ).toUInt() )
+        {
+            nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+            opis = query.value( polaBazy.indexOf( "opis" ) ).toString();
+            ilosc = query.value( polaBazy.indexOf( "ilosc" ) ).toUInt();
+            cena = query.value( polaBazy.indexOf( "cena" ) ).toFloat();
+            vat = stringNaVat( query.value( polaBazy.indexOf( "vat" ) ).toString() );
+            cenaZakupu = query.value( polaBazy.indexOf( "cenaZakupu" ) ).toFloat();
+            idKategorii = query.value( polaBazy.indexOf( "idKategorii" ) ).toUInt();
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         float cenaZakupu;
@@ -222,12 +233,15 @@ public:
     };
 
     struct Pozycja {
-        Pozycja( unsigned int idTowaru, size_t ilosc )
-        {
+    protected:
+        Pozycja( unsigned int idTowaru, size_t ilosc ) {
             this->idTowaru = idTowaru;
             this->ilosc = ilosc;
         }
 
+        Pozycja() {}
+
+    public:
         unsigned int idTowaru;
         size_t ilosc;
     };
@@ -239,6 +253,14 @@ public:
                                  Rekord( "Pozycja_zamowienia", id )
         {
             this->idZamowienia = idZamowienia;
+        }
+
+        PozycjaZamowienia( const QSqlQuery &query )
+            : Rekord( "Pozycja_zamowienia", query.value( 0 ).toUInt() )
+        {
+            idTowaru = query.value( polaBazy.indexOf( "idTowaru" ) ).toUInt();
+            ilosc = query.value( polaBazy.indexOf( "ilosc" ) ).toUInt();
+            idZamowienia = query.value( polaBazy.indexOf( "idZamowienia" ) ).toUInt();
         }
 
         static QString tabela;
@@ -261,6 +283,16 @@ public:
             this->vat = vat;
         }
 
+        PozycjaSprzedazy( const QSqlQuery &query )
+            : Rekord( "Pozycja_sprzedazy", query.value( 0 ).toUInt() )
+        {
+            idTowaru = query.value( polaBazy.indexOf( "idTowaru" ) ).toUInt();
+            ilosc = query.value( polaBazy.indexOf( "ilosc" ) ).toUInt();
+            idSprzedazy = query.value( polaBazy.indexOf( "idSprzedazy" ) ).toUInt();
+            cena = query.value( polaBazy.indexOf( "cena" ) ).toUInt();
+            vat = stringNaVat( query.value( polaBazy.indexOf( "vat" ) ).toString() );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         unsigned int idSprzedazy;
@@ -273,6 +305,7 @@ public:
     };
 
     struct Transakcja {
+    protected:
         Transakcja( const QDate dataRealizacji = QDate(), float upust = 0.0,
                     StatusZamowienia status = Oczekujace )
         {
@@ -281,6 +314,10 @@ public:
             this->status = status;
         }
 
+        // nie dzia³a dla konstruktora bez argumentów (ambigous function call)
+        Transakcja(int) {}
+
+    public:
         QDate dataRealizacji;
         float upust;
         StatusZamowienia status;
@@ -296,6 +333,18 @@ public:
             this->idSklepu = idSklepu;
             this->dataZlozenia = dataZlozenia;
             this->nrFaktury = nrFaktury;
+        }
+
+        ZamowienieHurtownia( const QSqlQuery &query )
+            : Transakcja( 0 ),
+              Rekord( "Zamowienie", query.value( 0 ).toUInt() )
+        {
+            idSklepu = query.value( polaBazy.indexOf( "idSklepu" ) ).toUInt();
+            dataZlozenia = query.value( polaBazy.indexOf( "dataZlozenia" ) ).toDate();
+            nrFaktury = query.value( polaBazy.indexOf( "nrFaktury" ) ).toString();
+            dataRealizacji = query.value( polaBazy.indexOf( "dataRealizacji" ) ).toDate();
+            upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
+            status = stringNaStatus( query.value( polaBazy.indexOf( "status" ) ).toString() );
         }
 
         static QString tabela;
@@ -320,6 +369,19 @@ public:
             this->idPracownika = idPracownika;
             this->nrFaktury = nrFaktury;
             this->dataZlozenia = dataZlozenia;
+        }
+
+        ZamowienieSklep( const QSqlQuery &query )
+            : Transakcja( 0 ),
+              Rekord( "Zamowienie", query.value( 0 ).toUInt() )
+        {
+            idHurtowni = query.value( polaBazy.indexOf( "idHurtowni" ) ).toUInt();
+            idPracownika = query.value( polaBazy.indexOf( "idPracownika" ) ).toUInt();
+            dataZlozenia = query.value( polaBazy.indexOf( "dataZlozenia" ) ).toDate();
+            nrFaktury = query.value( polaBazy.indexOf( "nrFaktury" ) ).toString();
+            dataRealizacji = query.value( polaBazy.indexOf( "dataRealizacji" ) ).toDate();
+            upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
+            status = stringNaStatus( query.value( polaBazy.indexOf( "status" ) ).toString() );
         }
 
         static QString tabela;
@@ -348,6 +410,20 @@ public:
             this->idPracownika = idPracownika;
         }
 
+        Sprzedaz( const QSqlQuery &query )
+            : Transakcja( 0 ),
+              Rekord( "Sprzedaz", query.value( 0 ).toUInt() )
+        {
+            idKlienta = query.value( polaBazy.indexOf( "idKlienta" ) ).toUInt();
+            idPracownika = query.value( polaBazy.indexOf( "idPracownika" ) ).toUInt();
+            nrParagonu = query.value( polaBazy.indexOf( "nrParagonu" ) ).toString();
+            idFaktury = query.value( polaBazy.indexOf( "idFaktury" ) ).toUInt();
+            dataRealizacji = query.value( polaBazy.indexOf( "dataRealizacji" ) ).toDate();
+            upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
+            status = stringNaStatus( query.value( polaBazy.indexOf( "status" ) ).toString() );
+            potwierdzenie = stringNaPotwierdzenie( query.value( polaBazy.indexOf( "potwierdzenie" ) ).toString() );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         Potwierdzenie potwierdzenie;
@@ -366,6 +442,12 @@ public:
             this->nr = nr;
         }
 
+        Faktura( const QSqlQuery &query )
+            : Rekord( "Faktura", query.value( 0 ).toUInt() )
+        {
+            nr = query.value( polaBazy.indexOf( "nr" ) ).toString();
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         QString nr;
@@ -382,6 +464,12 @@ public:
             this->nazwa = nazwa;
         }
 
+        Kategoria( const QSqlQuery &query )
+            : Rekord( "Kategoria", query.value( 0 ).toUInt() )
+        {
+            nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         QString nazwa;
@@ -392,6 +480,7 @@ public:
     };
 
     struct Czlowiek {
+    protected:
         Czlowiek( const QString &nazwa, const QString &ulica, const QString &miejscowosc,
                   const QString &kodPocztowy, const QString &telefon, const QString &email )
         {
@@ -403,10 +492,10 @@ public:
             this->email = email;
         }
 
-        QString nazwa, ulica, miejscowosc, kodPocztowy, telefon, email;
-
-    protected:
         Czlowiek() {}
+
+    public:
+        QString nazwa, ulica, miejscowosc, kodPocztowy, telefon, email;
     };
 
     struct Klient : public Czlowiek, Rekord {
@@ -417,6 +506,18 @@ public:
                       Rekord( "Klient", id )
         {
             this->regon = regon;
+        }
+
+        Klient( const QSqlQuery &query )
+            : Rekord( "Klient", query.value( 0 ).toUInt() )
+        {
+            nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+            regon = query.value( polaBazy.indexOf( "regon" ) ).toString();
+            ulica = query.value( polaBazy.indexOf( "ulica" ) ).toString();
+            miejscowosc = query.value( polaBazy.indexOf( "miejscowosc" ) ).toString();
+            kodPocztowy = query.value( polaBazy.indexOf( "kodPocztowy" ) ).toString();
+            telefon = query.value( polaBazy.indexOf( "telefon" ) ).toString();
+            email = query.value( polaBazy.indexOf( "email" ) ).toString();
         }
 
         static QString tabela;
@@ -433,8 +534,7 @@ public:
                    Posada posada, const QDate dataZatrudnienia, float stawka,
                    const QString &ulica, const QString &miejscowosc,
                    const QString &kodPocztowy, const QString &telefon, const QString &email,
-                   const QString &login, const QString &haslo,
-                   unsigned int id = 0 )
+                   const QString &haslo, unsigned int id = 0 )
                     : Czlowiek( nazwa, ulica, miejscowosc, kodPocztowy, telefon, email ),
                       Rekord( "Pracownik", id )
         {
@@ -444,7 +544,6 @@ public:
             this->posada = posada;
             this->dataZatrudnienia = dataZatrudnienia;
             this->stawka = stawka;
-            this->login = login;
             this->haslo = haslo;
         }
 
@@ -462,13 +561,12 @@ public:
             kodPocztowy = query.value( polaBazy.indexOf( "kodPocztowy" ) ).toString();
             telefon = query.value( polaBazy.indexOf( "telefon" ) ).toString();
             email = query.value( polaBazy.indexOf( "email" ) ).toString();
-            login = query.value( polaBazy.indexOf( "login" ) ).toString();
             haslo = query.value( polaBazy.indexOf( "haslo" ) ).toString();
         }
 
         static QString tabela;
         static QStringList polaBazy;
-        QString pesel, nip, login, haslo;
+        QString pesel, nip, haslo;
         Posada posada;
         QDate dataZatrudnienia;
         float stawka;
@@ -567,8 +665,10 @@ signals:
 public slots:
 
 private:
-    static StawkaVAT stringNaVat( const QString &string );
     static Posada stringNaPosade( const QString &string );
+    static Potwierdzenie stringNaPotwierdzenie( const QString &string );
+    static StatusZamowienia stringNaStatus( const QString &string );
+    static StawkaVAT stringNaVat( const QString &string );
 
     QString dataNaString( const QDate &data );
     QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );

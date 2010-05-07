@@ -5,7 +5,7 @@
 int main( int argc, char *argv[] ) {
     QApplication app( argc, argv );
 
-    DBProxy db( NULL, "localhost", "Sklep", "root", "" );
+    DBProxy db( NULL, "localhost", "Sklep", "root", "inutero" );
     db.polacz();
 //
 //    QMap< DBProxy::Hurtownia::PoleBazy, QVariant > filtr;

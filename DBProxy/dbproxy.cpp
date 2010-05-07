@@ -266,10 +266,10 @@ unsigned int DBProxy::dodajHurtownie(const Hurtownia &hurtownia)
 
 unsigned int DBProxy::dodajPracownika(const Pracownik &pracownik)
 {
-    QString queryString = QString( "INSERT INTO Pracownik (id, nazwisko, PESEL, NIP,"
+    QString queryString = QString( "INSERT INTO Pracownik (id, nazwa, pesel, nip,"
                                    "posada, dataZatrudnienia, stawka, ulica, miejscowosc, kodPocztowy,"
-                                   "telefon, email)"
-                                   "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11);" )
+                                   "telefon, email, haslo)"
+                                   "VALUES (NULL, %1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12);" )
             .arg( nawiasy( pracownik.nazwa ) )
             .arg( nawiasy( pracownik.pesel ) )
             .arg( nawiasy( pracownik.nip ) )
@@ -280,7 +280,8 @@ unsigned int DBProxy::dodajPracownika(const Pracownik &pracownik)
             .arg( nawiasy( pracownik.miejscowosc ) )
             .arg( nawiasy( pracownik.kodPocztowy ) )
             .arg( nawiasy( pracownik.telefon ) )
-            .arg( nawiasy( pracownik.email ) );
+            .arg( nawiasy( pracownik.email ) )
+            .arg( nawiasy( pracownik.haslo ) );
 
     return execQuery( queryString ).toUInt();
 }
@@ -407,4 +408,31 @@ DBProxy::Posada DBProxy::stringNaPosade(const QString &string)
 
     // domyœlnie
     return Sprzedawca;
+}
+
+DBProxy::StatusZamowienia DBProxy::stringNaStatus(const QString &string)
+{
+    if( string == "Oczekujace" )
+        return Oczekujace;
+
+    if( string == "Anulowane" )
+        return Anulowane;
+
+    if( string == "Zrealizowane" )
+        return Zrealizowane;
+
+    // domyœlnie
+    return Oczekujace;
+}
+
+DBProxy::Potwierdzenie DBProxy::stringNaPotwierdzenie(const QString &string)
+{
+    if( string == "Paragon" )
+        return PotwierdzenieParagon;
+
+    if( string == "Faktura" )
+        return PotwierdzenieFaktura;
+
+    // domyœlnie
+    return PotwierdzenieFaktura;
 }
