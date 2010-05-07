@@ -26,10 +26,14 @@ int main( int argc, char *argv[] ) {
 //    DBProxy::Hurtownia h( "nazwa", "regon", "ul", "m", "k0", "te", "f", "em", 3.4 );
 //    db.dodajHurtownie( h );
 
-    QList< DBProxy::Pracownik > pracownicy = db.pobierz< DBProxy::Pracownik >();
+
+    QMultiMap< DBProxy::Pracownik::PoleBazy, DBProxy::Filtr > filtr3;
+    filtr3.insert( DBProxy::Pracownik::PosadaPole, DBProxy::Filtr( DBProxy::Sprzedawca ) );
+    QList< DBProxy::Pracownik > pracownicy = db.pobierz< DBProxy::Pracownik >( filtr3 );
     foreach( DBProxy::Pracownik pracownik, pracownicy ) {
-        qDebug() << pracownik.id;
+        qDebug() << pracownik.posada;
     }
+
 
     return app.exec();
 }

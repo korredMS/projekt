@@ -645,16 +645,16 @@ public:
 
                 else if( Rekord::polaEnum.contains( poleStr ) ) {
                     if( poleStr == "vat" )
-                        queryString += nawiasy( vatNaString( wartosc.value< StawkaVAT >() ) );
+                        queryString += nawiasy( vatNaString( (StawkaVAT)wartosc.toInt() ) );
 
                     if( poleStr == "status" )
-                        queryString += nawiasy( statusNaString( wartosc.value< StatusZamowienia >() ) );
+                        queryString += nawiasy( statusNaString( (StatusZamowienia)wartosc.toInt() ) );
 
                     if( poleStr == "potwierdzenie" )
-                        queryString += nawiasy( potwierdzenieNaString( wartosc.value< Potwierdzenie >() ) );
+                        queryString += nawiasy( potwierdzenieNaString( (Potwierdzenie)wartosc.toInt() ) );
 
                     if( poleStr == "posada" )
-                        queryString += nawiasy( posadaNaString( wartosc.value< Posada >() ) );
+                        queryString += nawiasy( posadaNaString( (Posada)wartosc.toInt() ) );
                 }
 
                 else {
