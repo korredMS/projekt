@@ -666,8 +666,8 @@ public:
 
                 queryString += dzialanieString;
             }
+            queryString.chop( 4 );
         }
-        queryString.chop( 4 );
         queryString += ";";
 
         QSqlQuery query( db );
