@@ -10,11 +10,11 @@
  </data>
  <data>
   <variable>RunConfiguration0-ProFile</variable>
-  <value type="QString">DBProxy.pro</value>
+  <value type="QString">Sklep.pro</value>
  </data>
  <data>
   <variable>RunConfiguration0-RunConfiguration.name</variable>
-  <value type="QString">DBProxy</value>
+  <value type="QString">Sklep</value>
  </data>
  <data>
   <variable>RunConfiguration0-UseDyldImageSuffix</variable>
@@ -82,146 +82,7 @@
     <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-AjPLdFm4E7,guid=4474f3ef11050ca09e6a70ad00000010</value>
-    <value type="QString">DCCC_PATH=/usr/lib64/distcc/bin</value>
-    <value type="QString">DESKTOP_SESSION=default</value>
-    <value type="QString">DISPLAY=:0.0</value>
-    <value type="QString">DISTCC_LOG=</value>
-    <value type="QString">DISTCC_VERBOSE=</value>
-    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">EDITOR=/bin/nano</value>
-    <value type="QString">GCC_SPECS=</value>
-    <value type="QString">GDK_USE_XFT=1</value>
-    <value type="QString">GS_LIB=/home/mslupny/.fonts</value>
-    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/mslupny/.gtkrc-2.0:/home/mslupny/.gtkrc-2.0-kde4:/home/mslupny/.kde4/share/config/gtkrc-2.0</value>
-    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/mslupny/.gtkrc::/home/mslupny/.kde4/share/config/gtkrc</value>
-    <value type="QString">HOME=/home/mslupny</value>
-    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/info</value>
-    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
-    <value type="QString">JAVACC_HOME=/usr/share/javacc/</value>
-    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">KDE_FULL_SESSION=true</value>
-    <value type="QString">KDE_MULTIHEAD=false</value>
-    <value type="QString">KDE_SESSION_UID=1000</value>
-    <value type="QString">KDE_SESSION_VERSION=4</value>
-    <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
-    <value type="QString">LANG=pl_PL</value>
-    <value type="QString">LC_ALL=pl_PL</value>
-    <value type="QString">LESS=-R -M --shift 5</value>
-    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
-    <value type="QString">LOGNAME=mslupny</value>
-    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/man:/etc/java-config/system-vm/man/:/usr/lib64/php5/man/:/opt/nvidia-cg-toolkit/man</value>
-    <value type="QString">OPENGL_PROFILE=xorg-x11</value>
-    <value type="QString">PAGER=/usr/bin/less</value>
-    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/x86_64-pc-linux-gnu/gcc-bin/4.4.3:/usr/games/bin</value>
-    <value type="QString">PWD=/home/mslupny</value>
-    <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">QT_PLUGIN_PATH=/home/mslupny/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2182,unix/evil_cat:/tmp/.ICE-unix/2182</value>
-    <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SHLVL=1</value>
-    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib64/strigi:</value>
-    <value type="QString">USER=mslupny</value>
-    <value type="QString">VBOX_APP_HOME=/usr/lib64/virtualbox-ose</value>
-    <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XCURSOR_THEME=whiteglass</value>
-    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
-    <value type="QString">XDM_MANAGED=method=classic,auto</value>
-    <value type="QString">_=/usr/lib64/kde4/libexec/start_kdeinit_wrapper</value>
-   </valuelist>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">/home/mslupny/work/projekt_sklep/DBProxy/DBProxy.pro</value>
-    <value type="QString">-spec</value>
-    <value type="QString">linux-g++</value>
-    <value type="QString">-r</value>
-    <value type="QString">CONFIG+=debug</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">/usr/bin/qmake</value>
-   <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/home/mslupny/work/projekt_sklep/DBProxy</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-Debug-buildstep1</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ANT_HOME=/usr/share/ant</value>
-    <value type="QString">CG_COMPILER_EXE=/opt/bin/cgc</value>
-    <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config</value>
-    <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
-    <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-AjPLdFm4E7,guid=4474f3ef11050ca09e6a70ad00000010</value>
-    <value type="QString">DCCC_PATH=/usr/lib64/distcc/bin</value>
-    <value type="QString">DESKTOP_SESSION=default</value>
-    <value type="QString">DISPLAY=:0.0</value>
-    <value type="QString">DISTCC_LOG=</value>
-    <value type="QString">DISTCC_VERBOSE=</value>
-    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">EDITOR=/bin/nano</value>
-    <value type="QString">GCC_SPECS=</value>
-    <value type="QString">GDK_USE_XFT=1</value>
-    <value type="QString">GS_LIB=/home/mslupny/.fonts</value>
-    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/mslupny/.gtkrc-2.0:/home/mslupny/.gtkrc-2.0-kde4:/home/mslupny/.kde4/share/config/gtkrc-2.0</value>
-    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/mslupny/.gtkrc::/home/mslupny/.kde4/share/config/gtkrc</value>
-    <value type="QString">HOME=/home/mslupny</value>
-    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/info</value>
-    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
-    <value type="QString">JAVACC_HOME=/usr/share/javacc/</value>
-    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">KDE_FULL_SESSION=true</value>
-    <value type="QString">KDE_MULTIHEAD=false</value>
-    <value type="QString">KDE_SESSION_UID=1000</value>
-    <value type="QString">KDE_SESSION_VERSION=4</value>
-    <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
-    <value type="QString">LANG=pl_PL</value>
-    <value type="QString">LC_ALL=pl_PL</value>
-    <value type="QString">LESS=-R -M --shift 5</value>
-    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
-    <value type="QString">LOGNAME=mslupny</value>
-    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/man:/etc/java-config/system-vm/man/:/usr/lib64/php5/man/:/opt/nvidia-cg-toolkit/man</value>
-    <value type="QString">OPENGL_PROFILE=xorg-x11</value>
-    <value type="QString">PAGER=/usr/bin/less</value>
-    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/x86_64-pc-linux-gnu/gcc-bin/4.4.3:/usr/games/bin</value>
-    <value type="QString">PWD=/home/mslupny</value>
-    <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">QT_PLUGIN_PATH=/home/mslupny/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2182,unix/evil_cat:/tmp/.ICE-unix/2182</value>
-    <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SHLVL=1</value>
-    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib64/strigi:</value>
-    <value type="QString">USER=mslupny</value>
-    <value type="QString">VBOX_APP_HOME=/usr/lib64/virtualbox-ose</value>
-    <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XCURSOR_THEME=whiteglass</value>
-    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
-    <value type="QString">XDM_MANAGED=method=classic,auto</value>
-    <value type="QString">_=/usr/lib64/kde4/libexec/start_kdeinit_wrapper</value>
-   </valuelist>
-   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">-w</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/home/mslupny/work/projekt_sklep/DBProxy</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-Debug-cleanstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ANT_HOME=/usr/share/ant</value>
-    <value type="QString">CG_COMPILER_EXE=/opt/bin/cgc</value>
-    <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config</value>
-    <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
-    <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-jRdqyB8Tmk,guid=16f7b6d71dfbca1dfeda68850000000e</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-MCcEZE4aKC,guid=749226f9843bc86ca0d48e410000000e</value>
     <value type="QString">DCCC_PATH=/usr/lib64/distcc/bin</value>
     <value type="QString">DESKTOP_SESSION=default</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -258,7 +119,148 @@
     <value type="QString">PWD=/home/mslupny</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/mslupny/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2125,unix/evil_cat:/tmp/.ICE-unix/2125</value>
+    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2121,unix/evil_cat:/tmp/.ICE-unix/2121</value>
+    <value type="QString">SHELL=/bin/bash</value>
+    <value type="QString">SHLVL=1</value>
+    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib64/strigi:</value>
+    <value type="QString">USER=mslupny</value>
+    <value type="QString">VBOX_APP_HOME=/usr/lib64/virtualbox-ose</value>
+    <value type="QString">WINDOWPATH=7</value>
+    <value type="QString">XCURSOR_THEME=whiteglass</value>
+    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
+    <value type="QString">XDM_MANAGED=method=classic,auto</value>
+    <value type="QString">_=/usr/lib64/kde4/libexec/start_kdeinit_wrapper</value>
+   </valuelist>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">/home/mslupny/work/Sklep/Sklep.pro</value>
+    <value type="QString">-spec</value>
+    <value type="QString">linux-g++</value>
+    <value type="QString">-r</value>
+    <value type="QString">CONFIG+=debug</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">/usr/bin/qmake</value>
+   <value key="abstractProcess.enabled" type="bool">false</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/mslupny/work/Sklep</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Debug-buildstep1</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ANT_HOME=/usr/share/ant</value>
+    <value type="QString">CG_COMPILER_EXE=/opt/bin/cgc</value>
+    <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config</value>
+    <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
+    <value type="QString">CVS_RSH=ssh</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-MCcEZE4aKC,guid=749226f9843bc86ca0d48e410000000e</value>
+    <value type="QString">DCCC_PATH=/usr/lib64/distcc/bin</value>
+    <value type="QString">DESKTOP_SESSION=default</value>
+    <value type="QString">DISPLAY=:0.0</value>
+    <value type="QString">DISTCC_LOG=</value>
+    <value type="QString">DISTCC_VERBOSE=</value>
+    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
+    <value type="QString">EDITOR=/bin/nano</value>
+    <value type="QString">GCC_SPECS=</value>
+    <value type="QString">GDK_USE_XFT=1</value>
+    <value type="QString">GS_LIB=/home/mslupny/.fonts</value>
+    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/mslupny/.gtkrc-2.0:/home/mslupny/.gtkrc-2.0-kde4:/home/mslupny/.kde4/share/config/gtkrc-2.0</value>
+    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/mslupny/.gtkrc::/home/mslupny/.kde4/share/config/gtkrc</value>
+    <value type="QString">HOME=/home/mslupny</value>
+    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/info</value>
+    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
+    <value type="QString">JAVACC_HOME=/usr/share/javacc/</value>
+    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
+    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
+    <value type="QString">KDE_FULL_SESSION=true</value>
+    <value type="QString">KDE_MULTIHEAD=false</value>
+    <value type="QString">KDE_SESSION_UID=1000</value>
+    <value type="QString">KDE_SESSION_VERSION=4</value>
+    <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
+    <value type="QString">LANG=pl_PL</value>
+    <value type="QString">LANGUAGE=</value>
+    <value type="QString">LC_ALL=pl_PL</value>
+    <value type="QString">LESS=-R -M --shift 5</value>
+    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
+    <value type="QString">LOGNAME=mslupny</value>
+    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/man:/etc/java-config/system-vm/man/:/usr/lib64/php5/man/:/opt/nvidia-cg-toolkit/man</value>
+    <value type="QString">OPENGL_PROFILE=xorg-x11</value>
+    <value type="QString">PAGER=/usr/bin/less</value>
+    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/x86_64-pc-linux-gnu/gcc-bin/4.4.3:/usr/games/bin</value>
+    <value type="QString">PWD=/home/mslupny</value>
+    <value type="QString">QTDIR=/usr/share/qt4</value>
+    <value type="QString">QT_PLUGIN_PATH=/home/mslupny/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
+    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2121,unix/evil_cat:/tmp/.ICE-unix/2121</value>
+    <value type="QString">SHELL=/bin/bash</value>
+    <value type="QString">SHLVL=1</value>
+    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib64/strigi:</value>
+    <value type="QString">USER=mslupny</value>
+    <value type="QString">VBOX_APP_HOME=/usr/lib64/virtualbox-ose</value>
+    <value type="QString">WINDOWPATH=7</value>
+    <value type="QString">XCURSOR_THEME=whiteglass</value>
+    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
+    <value type="QString">XDM_MANAGED=method=classic,auto</value>
+    <value type="QString">_=/usr/lib64/kde4/libexec/start_kdeinit_wrapper</value>
+   </valuelist>
+   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">-w</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/mslupny/work/Sklep</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Debug-cleanstep0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ANT_HOME=/usr/share/ant</value>
+    <value type="QString">CG_COMPILER_EXE=/opt/bin/cgc</value>
+    <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/lib/hsqldb /usr/share/config</value>
+    <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5/ext-active/ /etc/php/cgi-php5/ext-active/ /etc/php/apache2-php5/ext-active/ /etc/udev/rules.d /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/revdep-rebuild</value>
+    <value type="QString">CVS_RSH=ssh</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-MCcEZE4aKC,guid=749226f9843bc86ca0d48e410000000e</value>
+    <value type="QString">DCCC_PATH=/usr/lib64/distcc/bin</value>
+    <value type="QString">DESKTOP_SESSION=default</value>
+    <value type="QString">DISPLAY=:0.0</value>
+    <value type="QString">DISTCC_LOG=</value>
+    <value type="QString">DISTCC_VERBOSE=</value>
+    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
+    <value type="QString">EDITOR=/bin/nano</value>
+    <value type="QString">GCC_SPECS=</value>
+    <value type="QString">GDK_USE_XFT=1</value>
+    <value type="QString">GS_LIB=/home/mslupny/.fonts</value>
+    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/mslupny/.gtkrc-2.0:/home/mslupny/.gtkrc-2.0-kde4:/home/mslupny/.kde4/share/config/gtkrc-2.0</value>
+    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/mslupny/.gtkrc::/home/mslupny/.kde4/share/config/gtkrc</value>
+    <value type="QString">HOME=/home/mslupny</value>
+    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/info</value>
+    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
+    <value type="QString">JAVACC_HOME=/usr/share/javacc/</value>
+    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
+    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
+    <value type="QString">KDE_FULL_SESSION=true</value>
+    <value type="QString">KDE_MULTIHEAD=false</value>
+    <value type="QString">KDE_SESSION_UID=1000</value>
+    <value type="QString">KDE_SESSION_VERSION=4</value>
+    <value type="QString">LADSPA_PATH=/usr/lib64/ladspa</value>
+    <value type="QString">LANG=pl_PL</value>
+    <value type="QString">LANGUAGE=</value>
+    <value type="QString">LC_ALL=pl_PL</value>
+    <value type="QString">LESS=-R -M --shift 5</value>
+    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
+    <value type="QString">LOGNAME=mslupny</value>
+    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/x86_64-pc-linux-gnu/4.4.3/man:/etc/java-config/system-vm/man/:/usr/lib64/php5/man/:/opt/nvidia-cg-toolkit/man</value>
+    <value type="QString">OPENGL_PROFILE=xorg-x11</value>
+    <value type="QString">PAGER=/usr/bin/less</value>
+    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/x86_64-pc-linux-gnu/gcc-bin/4.4.3:/usr/games/bin</value>
+    <value type="QString">PWD=/home/mslupny</value>
+    <value type="QString">QTDIR=/usr/share/qt4</value>
+    <value type="QString">QT_PLUGIN_PATH=/home/mslupny/.kde4/lib64/kde4/plugins/:/usr/lib64/kde4/plugins/</value>
+    <value type="QString">SESSION_MANAGER=local/evil_cat:@/tmp/.ICE-unix/2121,unix/evil_cat:/tmp/.ICE-unix/2121</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib64/strigi:</value>
@@ -278,7 +280,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/home/mslupny/work/projekt_sklep/DBProxy</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/mslupny/work/Sklep</value>
    <value key="cleanConfig" type="bool">true</value>
    <valuelist key="makeargs" type="QVariantList">
     <value type="QString">clean</value>

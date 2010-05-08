@@ -682,6 +682,11 @@ public:
         return lista;
     }
 
+    static Posada stringNaPosade( const QString &string );
+    static Potwierdzenie stringNaPotwierdzenie( const QString &string );
+    static StatusZamowienia stringNaStatus( const QString &string );
+    static StawkaVAT stringNaVat( const QString &string );
+
 signals:
     void bladDodawaniaRekordu();
     void log( QString str );
@@ -689,11 +694,6 @@ signals:
 public slots:
 
 private:
-    static Posada stringNaPosade( const QString &string );
-    static Potwierdzenie stringNaPotwierdzenie( const QString &string );
-    static StatusZamowienia stringNaStatus( const QString &string );
-    static StawkaVAT stringNaVat( const QString &string );
-
     QString dataNaString( const QDate &data );
     QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );
     QString liczbaNaString( double liczba );
