@@ -69,7 +69,7 @@ void MainWindow::on_pushButton_clicked()
                                   ui->lineEdit_8->text(),
                                   ui->lineEdit_9->text().toFloat() );
     unsigned int id;
-    if( ( id = db->dodajHurtownie( hurtownia ) ) != 0 )
+    if( ( id = db->dodaj( hurtownia ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -88,7 +88,7 @@ void MainWindow::on_pushButton_3_clicked()
                           ui->lineEdit_31->text().toFloat() );
 
     unsigned int id;
-    if( ( id = db->dodajSklep( sklep ) ) != 0 )
+    if( ( id = db->dodaj( sklep ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id )  + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")");
 }
 
@@ -121,7 +121,7 @@ void MainWindow::on_pushButton_5_clicked()
                                    (DBProxy::StawkaVAT)ui->lineEdit_36->text().toInt() );
 
     unsigned int id;
-    if( ( id = db->dodajTowarHurtownia( towar ) ) != 0 )
+    if( ( id = db->dodaj( towar ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id )  + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")");
 }
 
@@ -141,7 +141,7 @@ void MainWindow::on_pushButton_7_clicked()
                                    ui->lineEdit_51->text().toUInt() );
 
     unsigned int id;
-    if( ( id = db->dodajTowarSklep( towar ) ) != 0 )
+    if( ( id = db->dodaj( towar ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id )  + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")");
 }
 
@@ -152,7 +152,7 @@ void MainWindow::on_pushButton_9_clicked()
                                         ui->lineEdit_45->text().toUInt() );
 
     unsigned int id;
-    if( ( id = db->dodajPozycjeZamowienia( pozycja ) ) != 0 )
+    if( ( id = db->dodaj( pozycja ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -170,7 +170,7 @@ void MainWindow::on_pushButton_11_clicked()
                                        (DBProxy::StawkaVAT)ui->lineEdit_50->text().toInt() );
 
     unsigned int id;
-    if( ( id = db->dodajPozycjeSprzedazy( pozycja ) ) != 0 )
+    if( ( id = db->dodaj( pozycja ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -188,7 +188,7 @@ void MainWindow::on_pushButton_15_clicked()
                                              ui->lineEdit_60->text().toFloat(),
                                              (DBProxy::StatusZamowienia)ui->lineEdit_61->text().toInt() );
     unsigned int id;
-    if( ( id = db->dodajZamowienieHurtownia( zamowienie ) ) != 0 )
+    if( ( id = db->dodaj( zamowienie ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -207,7 +207,7 @@ void MainWindow::on_pushButton_17_clicked()
                                              ui->lineEdit_67->text().toFloat(),
                                              (DBProxy::StatusZamowienia)ui->lineEdit_68->text().toInt() );
     unsigned int id;
-    if( ( id = db->dodajZamowienieSklep( zamowienie ) ) != 0 )
+    if( ( id = db->dodaj( zamowienie ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -227,7 +227,7 @@ void MainWindow::on_pushButton_33_clicked()
                                 ui->lineEdit_111->text().toFloat(),
                                 (DBProxy::StatusZamowienia)ui->lineEdit_112->text().toInt() );
     unsigned int id;
-    if( ( id = db->dodajSprzedaz( sprzedaz ) ) != 0 )
+    if( ( id = db->dodaj( sprzedaz ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -236,7 +236,7 @@ void MainWindow::on_pushButton_35_clicked()
     DBProxy::Faktura faktura( ui->lineEdit_113->text() );
 
     unsigned int id;
-    if( ( id = db->dodajFakture( faktura ) ) != 0 )
+    if( ( id = db->dodaj( faktura ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -250,7 +250,7 @@ void MainWindow::on_pushButton_37_clicked()
     DBProxy::Kategoria kategoria( ui->lineEdit_114->text() );
 
     unsigned int id;
-    if( ( id = db->dodajKategorie( kategoria ) ) != 0 )
+    if( ( id = db->dodaj( kategoria ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -269,7 +269,7 @@ void MainWindow::on_pushButton_39_clicked()
                             ui->lineEdit_120->text(),
                             ui->lineEdit_121->text() );
     unsigned int id;
-    if( ( id = db->dodajKlienta( klient ) ) != 0 )
+    if( ( id = db->dodaj( klient ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }
 
@@ -293,6 +293,6 @@ void MainWindow::on_pushButton_41_clicked()
                                   ui->lineEdit_132->text(),
                                   ui->lineEdit_134->text() );
     unsigned int id;
-    if( ( id = db->dodajPracownika( pracownik ) ) != 0 )
+    if( ( id = db->dodaj( pracownik ) ) != 0 )
         ui->plainTextEdit->appendPlainText( QDateTime::currentDateTime().toString() + "\tWpis dodany. id = " + QString::number( id ) + " (" + ui->tabWidget->tabText( ui->tabWidget->currentIndex() ) + ")" );
 }

@@ -98,10 +98,9 @@ public:
     };
 
     struct Hurtownia : public HurtowniaProto, Rekord {
-        Hurtownia( const QString &nazwa, const QString &regon, const QString &ulica,
-                   const QString &miejscowosc, const QString &kodPocztowy, const QString &telefon,
-                   const QString &fax, const QString &email, float upust = 0,
-                   unsigned int id = 0 )
+        Hurtownia( const QString &nazwa, const QString &regon, const QString &ulica, const QString &miejscowosc,
+                   const QString &kodPocztowy, const QString &telefon, const QString &fax, const QString &email,
+                   float upust = 0, unsigned int id = 0 )
                        : HurtowniaProto( nazwa, regon, ulica, miejscowosc, kodPocztowy, telefon, fax, email, upust ),
                          Rekord( "Hurtownia", id )
         {}
@@ -119,6 +118,19 @@ public:
             email = query.value( polaBazy.indexOf( "email" ) ).toString();
             upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
             id = query.value( polaBazy.indexOf( "id" ) ).toUInt();
+        }
+
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6, %7, %8, %9" )
+                    .arg( nawiasy( REGON ) )
+                    .arg( nawiasy( nazwa ) )
+                    .arg( liczbaNaString( upust ) )
+                    .arg( nawiasy( ulica ) )
+                    .arg( nawiasy( miejscowosc ) )
+                    .arg( nawiasy( kodPocztowy ) )
+                    .arg( nawiasy( telefon ) )
+                    .arg( nawiasy( fax ) )
+                    .arg( nawiasy( email ) );
         }
 
         static QString tabela;
@@ -159,6 +171,21 @@ public:
             haslo = query.value( polaBazy.indexOf( "haslo" ) ).toString();
         }
 
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11" )
+                        .arg( nawiasy( REGON ) )
+                        .arg( nawiasy( nazwa ) )
+                        .arg( liczbaNaString( upust ) )
+                        .arg( nawiasy( login ) )
+                        .arg( nawiasy( haslo ) )
+                        .arg( nawiasy( ulica ) )
+                        .arg( nawiasy( miejscowosc ) )
+                        .arg( nawiasy( kodPocztowy ) )
+                        .arg( nawiasy( telefon ) )
+                        .arg( nawiasy( fax ) )
+                        .arg( nawiasy( email ) );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         QString login, haslo;
@@ -186,7 +213,7 @@ public:
         size_t ilosc;
         float cena;
         StawkaVAT vat;
-};
+    };
 
     struct TowarHurtownia : public Towar, Rekord {
         TowarHurtownia( const QString &nazwa, const QString &opis, size_t ilosc, float cena,
@@ -203,6 +230,15 @@ public:
             ilosc = query.value( polaBazy.indexOf( "ilosc" ) ).toUInt();
             cena = query.value( polaBazy.indexOf( "cena" ) ).toFloat();
             vat = stringNaVat( query.value( polaBazy.indexOf( "vat" ) ).toString() );
+        }
+
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5" )
+                        .arg( nawiasy( nazwa ) )
+                        .arg( nawiasy( opis ) )
+                        .arg( liczbaNaString( cena ) )
+                        .arg( liczbaNaString( ilosc ) )
+                        .arg( nawiasy( liczbaNaString( vat ) ) );
         }
 
         static QString tabela;
@@ -233,6 +269,17 @@ public:
             vat = stringNaVat( query.value( polaBazy.indexOf( "vat" ) ).toString() );
             cenaZakupu = query.value( polaBazy.indexOf( "cenaZakupu" ) ).toFloat();
             idKategorii = query.value( polaBazy.indexOf( "idKategorii" ) ).toUInt();
+        }
+
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6, %7" )
+                        .arg( nawiasy( nazwa ) )
+                        .arg( nawiasy( opis ) )
+                        .arg( liczbaNaString( cena ) )
+                        .arg( liczbaNaString( ilosc ) )
+                        .arg( liczbaNaString( idKategorii ) )
+                        .arg( nawiasy( liczbaNaString( vat ) ) )
+                        .arg( liczbaNaString( cenaZakupu ) );
         }
 
         static QString tabela;
@@ -276,6 +323,13 @@ public:
             idZamowienia = query.value( polaBazy.indexOf( "idZamowienia" ) ).toUInt();
         }
 
+        QString wartosci() const {
+            return QString( "%1, %2, %3" )
+                    .arg( liczbaNaString( idZamowienia ) )
+                    .arg( liczbaNaString( idTowaru ) )
+                    .arg( liczbaNaString( ilosc ) );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         unsigned int idZamowienia;
@@ -304,6 +358,15 @@ public:
             idSprzedazy = query.value( polaBazy.indexOf( "idSprzedazy" ) ).toUInt();
             cena = query.value( polaBazy.indexOf( "cena" ) ).toUInt();
             vat = stringNaVat( query.value( polaBazy.indexOf( "vat" ) ).toString() );
+        }
+
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5" )
+                    .arg( liczbaNaString( idSprzedazy ) )
+                    .arg( liczbaNaString( idTowaru ) )
+                    .arg( liczbaNaString( ilosc ) )
+                    .arg( liczbaNaString( cena ) )
+                    .arg( liczbaNaString( vat ) );
         }
 
         static QString tabela;
@@ -360,6 +423,16 @@ public:
             status = stringNaStatus( query.value( polaBazy.indexOf( "status" ) ).toString() );
         }
 
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6" )
+                        .arg( liczbaNaString( idSklepu ) )
+                        .arg( nawiasy( dataNaString( dataZlozenia ) ) )
+                        .arg( nawiasy( dataNaString( dataRealizacji ) ) )
+                        .arg( liczbaNaString( upust ) )
+                        .arg( nawiasy( statusNaString( status) ) )
+                        .arg( nawiasy( nrFaktury ) );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         unsigned int idSklepu;
@@ -395,6 +468,16 @@ public:
             dataRealizacji = query.value( polaBazy.indexOf( "dataRealizacji" ) ).toDate();
             upust = query.value( polaBazy.indexOf( "upust" ) ).toFloat();
             status = stringNaStatus( query.value( polaBazy.indexOf( "status" ) ).toString() );
+        }
+
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6" )
+                        .arg( liczbaNaString( idHurtowni ) )
+                        .arg( nawiasy( dataNaString( dataZlozenia ) ) )
+                        .arg( nawiasy( dataNaString( dataRealizacji ) ) )
+                        .arg( nawiasy( statusNaString( status ) ) )
+                        .arg( nawiasy( nrFaktury ) )
+                        .arg( liczbaNaString( idPracownika ) );
         }
 
         static QString tabela;
@@ -437,6 +520,16 @@ public:
             potwierdzenie = stringNaPotwierdzenie( query.value( polaBazy.indexOf( "potwierdzenie" ) ).toString() );
         }
 
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6, %7" )
+                    .arg( nawiasy( dataNaString( dataRealizacji ) ) )
+                    .arg( nawiasy( statusNaString( status ) ) )
+                    .arg( nawiasy( potwierdzenieNaString( potwierdzenie ) ) )
+                    .arg( nawiasy( nrParagonu ) )
+                    .arg( liczbaNaString( idFaktury ) )
+                    .arg( liczbaNaString( idKlienta ) )
+                    .arg( liczbaNaString( idPracownika ) );
+        }
         static QString tabela;
         static QStringList polaBazy;
         Potwierdzenie potwierdzenie;
@@ -461,6 +554,10 @@ public:
             nr = query.value( polaBazy.indexOf( "nr" ) ).toString();
         }
 
+        QString wartosci() const {
+            return nawiasy( nr );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         QString nr;
@@ -481,6 +578,10 @@ public:
             : Rekord( "Kategoria", query.value( 0 ).toUInt() )
         {
             nazwa = query.value( polaBazy.indexOf( "nazwa" ) ).toString();
+        }
+
+        QString wartosci() const {
+            return nawiasy( nazwa );
         }
 
         static QString tabela;
@@ -533,6 +634,16 @@ public:
             email = query.value( polaBazy.indexOf( "email" ) ).toString();
         }
 
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6" )
+                    .arg( nawiasy( regon ) )
+                    .arg( nawiasy( ulica ) )
+                    .arg( nawiasy( miejscowosc ) )
+                    .arg( nawiasy( kodPocztowy ) )
+                    .arg( nawiasy( telefon ) )
+                    .arg( nawiasy( nazwa ) );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         QString regon;
@@ -577,6 +688,22 @@ public:
             haslo = query.value( polaBazy.indexOf( "haslo" ) ).toString();
         }
 
+        QString wartosci() const {
+            return QString( "%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12" )
+                        .arg( nawiasy( nazwa ) )
+                        .arg( nawiasy( pesel ) )
+                        .arg( nawiasy( nip ) )
+                        .arg( nawiasy( posadaNaString( posada ) ) )
+                        .arg( nawiasy( dataNaString( dataZatrudnienia ) ) )
+                        .arg( liczbaNaString( stawka ) )
+                        .arg( nawiasy( ulica ) )
+                        .arg( nawiasy( miejscowosc ) )
+                        .arg( nawiasy( kodPocztowy ) )
+                        .arg( nawiasy( telefon ) )
+                        .arg( nawiasy( email ) )
+                        .arg( nawiasy( haslo ) );
+        }
+
         static QString tabela;
         static QStringList polaBazy;
         QString pesel, nip, haslo;
@@ -598,19 +725,11 @@ public:
     void rozpocznijDodawanie();
     void zakonczDodawanie();
 
-    unsigned int dodajFakture( const Faktura &faktura );
-    unsigned int dodajHurtownie( const Hurtownia &hurtownia );
-    unsigned int dodajKategorie( const Kategoria &kategoria );
-    unsigned int dodajKlienta( const Klient &klient );
-    unsigned int dodajPozycjeSprzedazy( const PozycjaSprzedazy &pozycja );
-    unsigned int dodajPozycjeZamowienia( const PozycjaZamowienia &pozycja );
-    unsigned int dodajPracownika( const Pracownik &pracownik );
-    unsigned int dodajSklep( const Sklep &sklep );
-    unsigned int dodajSprzedaz( const Sprzedaz &sprzedaz );
-    unsigned int dodajTowarHurtownia( const TowarHurtownia &towar );
-    unsigned int dodajTowarSklep( const TowarSklep &towar );
-    unsigned int dodajZamowienieHurtownia( const ZamowienieHurtownia &zamowienie );
-    unsigned int dodajZamowienieSklep( const ZamowienieSklep &zamowienie );
+    template< typename T > unsigned int dodaj( const T& rekord ) {
+        QString queryString = QString( "INSERT INTO " + T::tabela + " (" + T::polaBazy.join( ", " ) + ") "
+                                       "VALUES (NULL, " + rekord.wartosci() + ");" );
+        return execQuery( queryString ).toUInt();
+    }
 
     template< typename T > QList< T > pobierz( const QMultiMap< typename T::PoleBazy, Filtr > &filtr = QMultiMap< typename T::PoleBazy, Filtr >(),
                                                Dzialanie dzialanie = AND )
@@ -686,6 +805,14 @@ public:
     static Potwierdzenie stringNaPotwierdzenie( const QString &string );
     static StatusZamowienia stringNaStatus( const QString &string );
     static StawkaVAT stringNaVat( const QString &string );
+    static QString dataNaString( const QDate &data );
+    static QString liczbaNaString( double liczba );
+    static QString nawiasy( const QString &string );
+    static QString posadaNaString( Posada posada );
+    static QString potwierdzenieNaString( Potwierdzenie potwierdzenie );
+    static QString relacjaNaString( Relacja relacja );
+    static QString statusNaString( StatusZamowienia status );
+    static QString vatNaString( StawkaVAT vat );
 
 signals:
     void bladDodawaniaRekordu();
@@ -694,16 +821,8 @@ signals:
 public slots:
 
 private:
-    QString dataNaString( const QDate &data );
-    QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );
-    QString liczbaNaString( double liczba );
-    QString nawiasy( const QString &string );
-    QString posadaNaString( Posada posada );
-    QString potwierdzenieNaString( Potwierdzenie potwierdzenie );
-    QString relacjaNaString( Relacja relacja );
-    QString statusNaString( StatusZamowienia status );
+    QVariant execQuery( const QString &queryString, QSqlQuery *query = 0 );    
     void usunRekord( const Rekord *rekord );
-    QString vatNaString( StawkaVAT vat );
 
     QSqlDatabase db;
 
