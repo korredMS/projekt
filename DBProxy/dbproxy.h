@@ -836,6 +836,20 @@ private slots:
     void debug( QString str );
 };
 
+typedef QMultiMap< DBProxy::Sklep::PoleBazy, DBProxy::Filtr > FiltrSklep;
+typedef QMultiMap< DBProxy::Hurtownia::PoleBazy, DBProxy::Filtr > FiltrHurtownia;
+typedef QMultiMap< DBProxy::TowarHurtownia::PoleBazy, DBProxy::Filtr > FiltrTowarHurtownia;
+typedef QMultiMap< DBProxy::TowarSklep::PoleBazy, DBProxy::Filtr > FiltrTowarSklep;
+typedef QMultiMap< DBProxy::PozycjaZamowienia::PoleBazy, DBProxy::Filtr > FiltrPozycjaZamowienia;
+typedef QMultiMap< DBProxy::PozycjaSprzedazy::PoleBazy, DBProxy::Filtr > FiltrPozycjaSprzedazy;
+typedef QMultiMap< DBProxy::ZamowienieHurtownia::PoleBazy, DBProxy::Filtr > FiltrZamowienieHurtownia;
+typedef QMultiMap< DBProxy::ZamowienieSklep::PoleBazy, DBProxy::Filtr > FiltrZamowienieSklep;
+typedef QMultiMap< DBProxy::Sprzedaz::PoleBazy, DBProxy::Filtr > FiltrSprzedaz;
+typedef QMultiMap< DBProxy::Faktura::PoleBazy, DBProxy::Filtr > FiltrFaktura;
+typedef QMultiMap< DBProxy::Kategoria::PoleBazy, DBProxy::Filtr > FiltrKategoria;
+typedef QMultiMap< DBProxy::Klient::PoleBazy, DBProxy::Filtr > FiltrKlient;
+typedef QMultiMap< DBProxy::Pracownik::PoleBazy, DBProxy::Filtr > FiltrPracownik;
+
 Q_DECLARE_METATYPE( DBProxy::Posada );
 Q_DECLARE_METATYPE( DBProxy::Potwierdzenie );
 Q_DECLARE_METATYPE( DBProxy::StatusZamowienia );

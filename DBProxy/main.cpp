@@ -5,7 +5,7 @@
 int main( int argc, char *argv[] ) {
     QApplication app( argc, argv );
 
-    DBProxy db( NULL, "localhost", "Sklep", "root", "" );
+    DBProxy db( NULL, "localhost", "Hurtownia", "root", "" );
     db.polacz();
 
     QMultiMap< DBProxy::TowarSklep::PoleBazy, DBProxy::Filtr > filtr, filtr2;
@@ -26,7 +26,6 @@ int main( int argc, char *argv[] ) {
     DBProxy::Hurtownia h( "nazwa", "regon", "ul", "m", "k0", "te", "f", "em", 3.4 );
     db.dodaj( h );
 
-
     QMultiMap< DBProxy::Pracownik::PoleBazy, DBProxy::Filtr > filtr3;
     filtr3.insert( DBProxy::Pracownik::PosadaPole, DBProxy::Filtr( DBProxy::Sprzedawca ) );
     QList< DBProxy::Pracownik > pracownicy = db.pobierz< DBProxy::Pracownik >( filtr3 );
@@ -34,6 +33,10 @@ int main( int argc, char *argv[] ) {
         qDebug() << pracownik.posada;
     }
 
+    FiltrSklep filtrMaciek;
+    filtrMaciek.insert( DBProxy::Sklep::Nazwa, DBProxy::Filtr( "123456789" ) );
+    QList< DBProxy::Sklep > mod = db.pobierz< DBProxy::Sklep >( filtrMaciek );
+    qDebug() << mod.size();
 
     return app.exec();
 }
