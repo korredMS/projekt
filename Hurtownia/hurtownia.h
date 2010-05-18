@@ -26,3 +26,4 @@ private:
 };
 
 #endif // HURTOWNIA_H
+//cokolwiek
