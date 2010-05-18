@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS `Hurtownia` (
   `fax` varchar(9) DEFAULT NULL,
   `email` varchar(30) DEFAULT NULL,
   `nazwa` varchar(30) NOT NULL,
+  `login` varchar(20) NOT NULL,
+  `haslo` varchar(20) NOT NULL,
+  `host` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
