@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Hurtownia</class>
+ <widget class="QMainWindow" name="Hurtownia">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>670</width>
+    <height>473</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Hurtownia</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="minimumSize">
+       <size>
+        <width>400</width>
+        <height>300</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Menadżer sklepów</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QFormLayout" name="formLayout_4">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLabel" name="nazwalabel">
+              <property name="text">
+               <string>Nazwa:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="regonlabel">
+              <property name="text">
+               <string>Regon:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="ulicalabel">
+              <property name="text">
+               <string>Ulica:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="miejscowosclabel">
+              <property name="text">
+               <string>Miejscowość:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="kodPocztowylabel">
+              <property name="text">
+               <string>Kod pocztowy:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="telefonlabel">
+              <property name="text">
+               <string>Telefon:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="faxlabel">
+              <property name="text">
+               <string>Fax</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="emaillabel">
+              <property name="text">
+               <string>e-mail:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="upustlabel">
+              <property name="text">
+               <string>Upust:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="loginlabel">
+              <property name="text">
+               <string>Login:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="haslolabel">
+              <property name="text">
+               <string>Hasło:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <layout class="QFormLayout" name="formLayout_2">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+            </property>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLineEdit" name="nazwaEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QLineEdit" name="regonEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <widget class="QLineEdit" name="ulicaEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" colspan="2">
+             <widget class="QLineEdit" name="miejscowoscEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" colspan="2">
+             <widget class="QLineEdit" name="kodPocztowyEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0" colspan="2">
+             <widget class="QLineEdit" name="telefonEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="inputMask">
+               <string/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="maxLength">
+               <number>9</number>
+              </property>
+              <property name="echoMode">
+               <enum>QLineEdit::Normal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0" colspan="2">
+             <widget class="QLineEdit" name="faxEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="inputMask">
+               <string/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="maxLength">
+               <number>9</number>
+              </property>
+              <property name="echoMode">
+               <enum>QLineEdit::Normal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0" colspan="2">
+             <widget class="QLineEdit" name="emailEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0" colspan="2">
+             <widget class="QLineEdit" name="upustEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="0" colspan="2">
+             <widget class="QLineEdit" name="loginEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0" colspan="2">
+             <widget class="QLineEdit" name="hasloEdit">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="maxLength">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="1">
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="1">
+             <widget class="QPushButton" name="nastepnyButton">
+              <property name="text">
+               <string>Następny</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="poprzedniButton">
+              <property name="text">
+               <string>Poprzedni</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <layout class="QFormLayout" name="formLayout">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="dodajButton">
+            <property name="text">
+             <string>Dodaj</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="zapiszButton">
+            <property name="text">
+             <string>Zapisz</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QPushButton" name="szukajButton">
+            <property name="text">
+             <string>Szukaj</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="anulujButton">
+            <property name="text">
+             <string>Anuluj</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Menadżer towarów</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>670</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
