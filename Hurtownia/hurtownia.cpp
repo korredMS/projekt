@@ -283,8 +283,17 @@ void OknoHurtownia::on_tableZamowienia_clicked(QModelIndex index)
 {
     idxZamowienia = index.row();
     ui->tableZamowienia->selectRow( idxZamowienia);
-    ui->buttonRealizujZamowieni->setEnabled(true);
-    ui->buttonAnulujZamowienie->setEnabled(true);
+
+
+    if(zamowienieH[ idxZamowienia ].status != DBProxy::Oczekujace)
+    {
+        ui->buttonRealizujZamowieni->setDisabled(true);
+        ui->buttonAnulujZamowienie->setDisabled(true);
+
+    }else{
+        ui->buttonRealizujZamowieni->setEnabled(true);
+        ui->buttonAnulujZamowienie->setEnabled(true);
+    }
 
 }
 
@@ -299,6 +308,8 @@ void OknoHurtownia::on_buttonRealizujZamowieni_clicked()
     }
 
     pobierzZamowienia();
+    ui->buttonRealizujZamowieni->setDisabled(true);
+    ui->buttonAnulujZamowienie->setDisabled(true);
 }
 
 void OknoHurtownia::on_buttonAnulujZamowienie_clicked()
@@ -312,6 +323,8 @@ void OknoHurtownia::on_buttonAnulujZamowienie_clicked()
     }
 
     pobierzZamowienia();
+    ui->buttonRealizujZamowieni->setDisabled(true);
+    ui->buttonAnulujZamowienie->setDisabled(true);
 }
 
 
