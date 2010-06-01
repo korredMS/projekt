@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EdycjaSklep</class>
+ <widget class="QDialog" name="EdycjaSklep">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>392</width>
+    <height>304</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>392</width>
+    <height>304</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>392</width>
+    <height>304</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="nazwalabel">
+           <property name="text">
+            <string>Nazwa:</string>
+           </property>
+           <property name="buddy">
+            <cstring>nazwaEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="regonlabel">
+           <property name="text">
+            <string>Regon:</string>
+           </property>
+           <property name="buddy">
+            <cstring>regonEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="ulicalabel">
+           <property name="text">
+            <string>Ulica:</string>
+           </property>
+           <property name="buddy">
+            <cstring>ulicaEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="miejscowosclabel">
+           <property name="text">
+            <string>Miejscowość:</string>
+           </property>
+           <property name="buddy">
+            <cstring>miejscowoscEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="kodPocztowylabel">
+           <property name="text">
+            <string>Kod pocztowy:</string>
+           </property>
+           <property name="buddy">
+            <cstring>kodPocztowyEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="telefonlabel">
+           <property name="text">
+            <string>Telefon:</string>
+           </property>
+           <property name="buddy">
+            <cstring>telefonEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="faxlabel">
+           <property name="text">
+            <string>Fax</string>
+           </property>
+           <property name="buddy">
+            <cstring>faxEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="emaillabel">
+           <property name="text">
+            <string>e-mail:</string>
+           </property>
+           <property name="buddy">
+            <cstring>emailEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="upustlabel">
+           <property name="text">
+            <string>Upust:</string>
+           </property>
+           <property name="buddy">
+            <cstring>upustEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="loginlabel">
+           <property name="text">
+            <string>Login:</string>
+           </property>
+           <property name="buddy">
+            <cstring>loginEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="haslolabel">
+           <property name="text">
+            <string>Hasło:</string>
+           </property>
+           <property name="buddy">
+            <cstring>hasloEdit</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLineEdit" name="nazwaEdit">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="regonEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="ulicaEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="miejscowoscEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="kodPocztowyEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>6</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="telefonEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="inputMask">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="maxLength">
+            <number>9</number>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::Normal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="faxEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="inputMask">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="maxLength">
+            <number>9</number>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::Normal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="emailEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="upustEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="loginEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="hasloEdit">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>13</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="zapiszButton">
+         <property name="text">
+          <string>Dodaj</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonWyczyscS">
+         <property name="text">
+          <string>Wyczyść</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="anulujButton">
+         <property name="text">
+          <string>Anuluj</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>nazwaEdit</tabstop>
+  <tabstop>regonEdit</tabstop>
+  <tabstop>ulicaEdit</tabstop>
+  <tabstop>miejscowoscEdit</tabstop>
+  <tabstop>kodPocztowyEdit</tabstop>
+  <tabstop>telefonEdit</tabstop>
+  <tabstop>faxEdit</tabstop>
+  <tabstop>emailEdit</tabstop>
+  <tabstop>upustEdit</tabstop>
+  <tabstop>loginEdit</tabstop>
+  <tabstop>hasloEdit</tabstop>
+  <tabstop>zapiszButton</tabstop>
+  <tabstop>anulujButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
