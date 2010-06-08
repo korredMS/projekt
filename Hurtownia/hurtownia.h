@@ -15,6 +15,7 @@
 class EdycjaSklep;
 class EdycjaTowar;
 class EdycjaKategoria;
+class SzczegolyZamowienia;
 
 
 
@@ -29,7 +30,7 @@ public:
     OknoHurtownia(QWidget *parent = 0);
     ~OknoHurtownia();
 
-    QStandardItemModel modelSklepy,modelTowary, modelKategorie, modelZamowienia;// model_5;
+    QStandardItemModel modelSklepy,modelTowary, modelKategorie, modelZamowienia, modelPozycjeZamowienia;
     QList< DBProxy::Kategoria > kH;
     QList< DBProxy::PozycjaZamowienia > pozycjeZamowienia;
     QList< DBProxy::Sklep > sklep;
@@ -48,11 +49,19 @@ private:
     EdycjaSklep *edycja;
     EdycjaTowar *towar;
     EdycjaKategoria *kategoria;
+    SzczegolyZamowienia *szczegoly;
+
 
     DBProxy db;
 
 private slots:
 
+
+    void on_odswiezButton_clicked();
+    void on_szczegolyButton_clicked();
+    void on_buttonModyfikujKat_clicked();
+    void on_buttonUsunKat_clicked();
+    void on_buttonModyfikujTowar_clicked();
     void on_tableListakategorii_clicked(QModelIndex index);
     void on_buttonDodajKat_clicked();
     void on_buttonAnulujZamowienie_clicked();
@@ -69,6 +78,7 @@ private slots:
     void pobierzTowary();
     void pobierzKategorie();
     void pobierzZamowienia();
+    void pobierzSzczegoly();
 
 
 };

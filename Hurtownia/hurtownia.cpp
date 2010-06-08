@@ -3,6 +3,7 @@
 #include "edycjasklep.h"
 #include "edycjatowar.h"
 #include "edycjakategoria.h"
+#include "szczegolyzamowienia.h"
 
 using namespace DBProxyNS;
 
@@ -126,7 +127,7 @@ void OknoHurtownia::on_usunButton_clicked() // sprawdziæ czy dzia³a ( bedzie usu
         return;
 }
 
-void OknoHurtownia::on_modyfikujButton_clicked() // dokoñczyc
+void OknoHurtownia::on_modyfikujButton_clicked()
 {
     int wiersz = ui->tableListaSklepow->currentIndex().row();
     EdycjaSklep *edycja = new EdycjaSklep(this,db, &sklep[wiersz], false);
@@ -186,22 +187,51 @@ void OknoHurtownia::on_tableListaTowarow_clicked(QModelIndex index)
     ui->buttonUsunTowar->setEnabled(true);
 }
 
-void OknoHurtownia::on_buttonUsunTowar_clicked()    // usuwa z listy ale nie usuwa z bazy
+void OknoHurtownia::on_buttonUsunTowar_clicked()    // usuwa z listy i z bazy
 {
-    unsigned int ret = QMessageBox::question( this, "Uwaga", "Czy na pewno chcesz usun¹æ wybrany sklep z bazy danych?",
-                                              QMessageBox::Yes | QMessageBox::No );
+    modelTowary.clear();
+    towaryH = db.pobierz< DBProxy::TowarHurtownia >();
     int idxTowaru = ui->tableListaTowarow->currentIndex().row();
+
+    unsigned int ret = QMessageBox::question( this, "Uwaga", "Czy na pewno chcesz usun¹æ wybrany towar z bazy danych?",
+                                              QMessageBox::Yes | QMessageBox::No );
+
+
     if ( ret & QMessageBox::Yes ){
-        db.usunRekord( &towaryH.at( idxTowaru ) );
 
-        towaryH.removeAt(idxTowaru);
-        modelTowary.removeRow( idxTowaru , QModelIndex() );
+        for( int i = 0 ; i < pozycjeZamowienia.length() ; ++i)
+        {            
+            if(pozycjeZamowienia[i].idTowaru  == towaryH[idxTowaru].id){
+                QMessageBox::warning( this, "Uwaga","Nie mo¿na usun¹t towaru bed¹cego czêœci¹ zamówienie",QMessageBox::Yes  );
 
-        pobierzTowary();
+                pobierzTowary();
+                return;
+
+            }else {
+                db.usunRekord( &towaryH.at( idxTowaru ) );
+
+                towaryH.removeAt(idxTowaru);
+                modelTowary.removeRow( idxTowaru , QModelIndex() );
+
+                pobierzTowary();
+                return;
+            }
+        }
     }
 
-    if ( ret & QMessageBox::No )
+    if ( ret & QMessageBox::No ){
+        pobierzZamowienia();
+        pobierzTowary();
         return;
+    }
+}
+
+void OknoHurtownia::on_buttonModyfikujTowar_clicked()
+{
+    int wiersz = ui->tableListaTowarow->currentIndex().row();
+    EdycjaTowar *edycjaTowar = new EdycjaTowar(this, db, &towaryH[wiersz], false);
+    connect(edycjaTowar, SIGNAL(odswiezTabeleTowarow()), this, SLOT(pobierzTowary()));
+    edycjaTowar->show();
 }
 
 /* OBS£UGA KATEGORII */
@@ -212,7 +242,7 @@ void OknoHurtownia::pobierzKategorie()   {
 
     for (int i = 0; i < kH.size(); i++) {
         modelKategorie.setItem( i, 0, new QStandardItem( DBProxy::liczbaNaString( kH[i].id ) ) );
-        modelKategorie.setItem( i, 1, new QStandardItem( kH[i].nazwa ) ); //Tutaj coœ siê pierdzieli
+        modelKategorie.setItem( i, 1, new QStandardItem( kH[i].nazwa ) );
 
     }
     modelKategorie.setHeaderData( 0, Qt::Horizontal, "Id" );
@@ -227,6 +257,7 @@ void OknoHurtownia::pobierzKategorie()   {
 void OknoHurtownia::on_buttonDodajKat_clicked()
 {
     EdycjaKategoria *kategoria = new EdycjaKategoria(this,db);
+    connect(kategoria, SIGNAL(odswiezTabeleKategoria()), this, SLOT(pobierzKategorie()));
     kategoria->show();
 
 }
@@ -239,6 +270,28 @@ void OknoHurtownia::on_tableListakategorii_clicked(QModelIndex index)
     ui->buttonUsunKat->setEnabled(true);
 }
 
+void OknoHurtownia::on_buttonUsunKat_clicked()
+{
+    modelKategorie.clear();
+    kH = db.pobierz< DBProxy::Kategoria >();
+    int wiersz = ui->tableListakategorii->currentIndex().row();
+    if( db.usunRekord(&kH[wiersz]))
+        qDebug() << "ok";
+    else
+        qDebug() << "dupa";
+
+    pobierzKategorie();
+    pobierzTowary();
+}
+
+void OknoHurtownia::on_buttonModyfikujKat_clicked()
+{
+    int wiersz = ui->tableListakategorii->currentIndex().row();
+    EdycjaKategoria *kategoria = new EdycjaKategoria(this, db, &kH[wiersz], false);
+    connect(kategoria, SIGNAL(odswiezTabeleKategoria()), this, SLOT(pobierzKategorie()));
+    connect(kategoria, SIGNAL(odswiezTabelaTowarow()), this, SLOT(pobierzTowary()));
+    kategoria->show();
+}
 
 
 /* OBS£UGA ZAMÓWIEÑ */
@@ -283,17 +336,9 @@ void OknoHurtownia::on_tableZamowienia_clicked(QModelIndex index)
 {
     idxZamowienia = index.row();
     ui->tableZamowienia->selectRow( idxZamowienia);
-
-
-    if(zamowienieH[ idxZamowienia ].status != DBProxy::Oczekujace)
-    {
-        ui->buttonRealizujZamowieni->setDisabled(true);
-        ui->buttonAnulujZamowienie->setDisabled(true);
-
-    }else{
-        ui->buttonRealizujZamowieni->setEnabled(true);
-        ui->buttonAnulujZamowienie->setEnabled(true);
-    }
+    ui->buttonRealizujZamowieni->setEnabled(true);
+    ui->buttonAnulujZamowienie->setEnabled(true);
+    ui->szczegolyButton->setEnabled(true);
 
 }
 
@@ -302,14 +347,41 @@ void OknoHurtownia::on_buttonRealizujZamowieni_clicked()
     int wiersz = ui->tableZamowienia->currentIndex().row();
     ZamowienieHurtownia &zamowienie = zamowienieH[ wiersz ];
 
+    modelPozycjeZamowienia.clear();
+    pozycjeZamowienia = db.pobierz <DBProxy::PozycjaZamowienia>();
+    modelTowary.clear();
+    towaryH = db.pobierz< DBProxy::TowarHurtownia >();
+
+
     if( zamowienie.status == DBProxy::Oczekujace ) {
         zamowienie.status = DBProxy::DoRealizacji;
         db.uaktualnij( zamowienie );
-    }
 
+        for( int i = 0 ; i < pozycjeZamowienia.length() ; ++i)
+        {
+            if(pozycjeZamowienia[i].idZamowienia == zamowienie.id){
+                for( int j = 0 ; j < towaryH.length() ; ++j){
+                    if(pozycjeZamowienia[i].idTowaru  == towaryH[j].id){
+                        if( pozycjeZamowienia[i].ilosc < towaryH[j].ilosc){    //zamówienie zawiera nie ca³kowit¹ iloœc towaru
+                            towaryH[j].ilosc = towaryH[j].ilosc - pozycjeZamowienia[i].ilosc;
+                            QMessageBox::warning( this, "Uwaga","M",
+                                                  QMessageBox::Yes  );
+                            db.uaktualnij( towaryH.at(j) );
+
+                        }else if( pozycjeZamowienia[i].ilosc == towaryH[j].ilosc){   //zamówienie zawiera ca³kowit¹ iloœc towaru
+                            towaryH[j].ilosc = 0;
+                            db.uaktualnij( towaryH.at(j) );
+                            QMessageBox::warning( this, "Uwaga","W",
+                                                  QMessageBox::Yes  );
+                        }
+                    }
+                }
+            }
+
+        }
+    }
     pobierzZamowienia();
-    ui->buttonRealizujZamowieni->setDisabled(true);
-    ui->buttonAnulujZamowienie->setDisabled(true);
+    pobierzTowary();
 }
 
 void OknoHurtownia::on_buttonAnulujZamowienie_clicked()
@@ -323,11 +395,49 @@ void OknoHurtownia::on_buttonAnulujZamowienie_clicked()
     }
 
     pobierzZamowienia();
-    ui->buttonRealizujZamowieni->setDisabled(true);
-    ui->buttonAnulujZamowienie->setDisabled(true);
 }
 
+void OknoHurtownia::pobierzSzczegoly(){
+
+    {
+        modelPozycjeZamowienia.clear();
+        pozycjeZamowienia = db.pobierz< DBProxy::PozycjaZamowienia >();
+
+        for (int i = 0; i < zamowienieH.size(); i++) {
+            modelPozycjeZamowienia.setItem( i, 0, new QStandardItem( DBProxy::liczbaNaString( pozycjeZamowienia[i].idZamowienia ) ) );
+            modelPozycjeZamowienia.setItem( i, 1, new QStandardItem( DBProxy::liczbaNaString( pozycjeZamowienia[i].idTowaru ) ) );
+            modelPozycjeZamowienia.setItem( i, 2, new QStandardItem(  pozycjeZamowienia[i].ilosc  ) );
+
+        }
+
+        modelPozycjeZamowienia.setHeaderData( 0, Qt::Horizontal, "Id Zamówienia" );
+        modelPozycjeZamowienia.setHeaderData( 1, Qt::Horizontal, "Id Towaru" );
+        modelPozycjeZamowienia.setHeaderData( 2, Qt::Horizontal, "IloœŸ" );
 
 
+        ui->tableZamowienia->setModel( &modelPozycjeZamowienia );
+        ui->tableZamowienia->setColumnWidth( 0, 50 );
+        ui->tableZamowienia->setColumnWidth( 1, 50 );
+        ui->tableZamowienia->setColumnWidth( 2, 30 );
+
+
+    }
+
+}
+
+void OknoHurtownia::on_szczegolyButton_clicked()
+{
+
+    int wiersz = ui->tableZamowienia->currentIndex().row();
+    SzczegolyZamowienia *pozZamowienia = new SzczegolyZamowienia(this,db, &zamowienieH[wiersz]);
+
+    pozZamowienia ->show();
+
+}
+
+void OknoHurtownia::on_odswiezButton_clicked()
+{
+    pobierzZamowienia();
+}
 
 

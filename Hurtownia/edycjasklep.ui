@@ -213,6 +213,9 @@
            <property name="autoFillBackground">
             <bool>false</bool>
            </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhNone</set>
+           </property>
            <property name="inputMask">
             <string/>
            </property>

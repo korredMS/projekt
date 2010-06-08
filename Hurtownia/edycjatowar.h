@@ -12,7 +12,7 @@ namespace Ui {
 class EdycjaTowar : public QDialog {
     Q_OBJECT
 public:
-    EdycjaTowar(QWidget  *parent, DBProxy &db);
+    EdycjaTowar(QWidget  *parent, DBProxy &db, DBProxy::TowarHurtownia *towar = 0, bool dodajeNowyT = true);
     ~EdycjaTowar();
 
 protected:
@@ -20,7 +20,9 @@ protected:
 
 private:
     DBProxy &db;
+    DBProxy::TowarHurtownia *mTowar;
     Ui::EdycjaTowar *ui;
+    bool dodajeT;
     void czyscUi();
 
 signals:

@@ -28,6 +28,7 @@ public slots:
     void zapiszClicked();
 
 private slots:
+
     void on_buttonWyczyscS_clicked();
     void on_anulujButton_clicked();
 

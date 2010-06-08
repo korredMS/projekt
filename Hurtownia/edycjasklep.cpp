@@ -26,7 +26,7 @@ EdycjaSklep::EdycjaSklep(QWidget *parent, DBProxy &adb, DBProxy::Sklep *asklep, 
         ui->upustEdit->setText( QString::number(asklep-> upust));
         ui->loginEdit->setText( asklep->login);
         ui->hasloEdit->setText( asklep->haslo);
-
+        ui->zapiszButton->setText("Modyfikuj");
     }
 
 }
@@ -74,11 +74,15 @@ void EdycjaSklep::zapiszClicked()
         sukces = db.uaktualnij( sklep ); //dodanie nowego lub zaktualizowanie starego rekordu
     }
 
-    if( sukces )
-        QMessageBox::information( this, "Dodanie sklepu", "Dodano sklep " + ui->nazwaEdit->text() , QMessageBox::Ok);
+    if( sukces && dodaje)
+        QMessageBox::information( this, "Dodanie sklepu", "Dodano sklep " + ui->nazwaEdit->text(), QMessageBox::Ok);
+    else if( sukces )
+        QMessageBox::information( this, "Modyfikacja sklepu", "Uaktualniono sklep " + ui->nazwaEdit->text(), QMessageBox::Ok);
+
 
     czyscUi();
     emit odswiezTabeleSklepu();
+    this->close();
 }
 
 void EdycjaSklep::czyscUi()
