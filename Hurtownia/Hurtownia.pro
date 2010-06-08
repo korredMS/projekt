@@ -9,13 +9,16 @@ SOURCES += main.cpp \
     edycjasklep.cpp \
     ../DBProxy/dbproxy.cpp \
     edycjatowar.cpp \
-    edycjakategoria.cpp
+    edycjakategoria.cpp \
+    szczegolyzamowienia.cpp
 HEADERS += hurtownia.h \
     edycjasklep.h \
     ../DBProxy/dbproxy.h \
     edycjatowar.h \
-    edycjakategoria.h
+    edycjakategoria.h \
+    szczegolyzamowienia.h
 FORMS += hurtownia.ui \
     edycjasklep.ui \
     edycjatowar.ui \
-    edycjakategoria.ui
+    edycjakategoria.ui \
+    szczegolyzamowienia.ui
