@@ -1,6 +1,7 @@
 #include "szczegolyzamowienia.h"
 #include "ui_szczegolyzamowienia.h"
 
+
 using namespace DBProxyNS;
 
 SzczegolyZamowienia::SzczegolyZamowienia(QWidget *parent,DBProxy &adb, ZamowienieHurtownia * aZamowienie) :
@@ -10,6 +11,7 @@ SzczegolyZamowienia::SzczegolyZamowienia(QWidget *parent,DBProxy &adb, Zamowieni
     mZamowienie( aZamowienie)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Szczególy zamówienia"));
 
     pobierzSzczegoly();
 }
@@ -40,17 +42,22 @@ void SzczegolyZamowienia::pobierzSzczegoly(){
 
     {
         modelPozycjeZamowienia.clear();
-        QList< PozycjaZamowienia > pozycjeZamowienia = db.pobierz< DBProxy::PozycjaZamowienia >( PozycjaZamowienia::IdZamowienia,
+        QList <PozycjaZamowienia>  pozycjeZamowienia = db.pobierz< DBProxy::PozycjaZamowienia >( PozycjaZamowienia::IdZamowienia,
                                                                                                  Filtr( mZamowienie->id ) );
+        QList <ZamowienieHurtownia> zamowienieH = db.pobierz < ZamowienieHurtownia> (ZamowienieHurtownia::Id, Filtr( mZamowienie->id));
 
         for (int i = 0; i < pozycjeZamowienia.size(); i++) {
             TowarHurtownia towar = db.pobierz< TowarHurtownia >( TowarHurtownia::Id, Filtr( pozycjeZamowienia[i].idTowaru )).first();
+            double upust = zamowienieH[mZamowienie->Id].upust * 0.01;
+            
             modelPozycjeZamowienia.setItem( i, 0, new QStandardItem( DBProxy::liczbaNaString( pozycjeZamowienia[i].idZamowienia ) ) );
             modelPozycjeZamowienia.setItem( i, 1, new QStandardItem( towar.nazwa ));
             modelPozycjeZamowienia.setItem( i, 2, new QStandardItem( towar.opis ) );
             modelPozycjeZamowienia.setItem( i, 3, new QStandardItem( DBProxy::liczbaNaString( towar.cena ) ) );
-            modelPozycjeZamowienia.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( towar.ilosc ) ) );
+            modelPozycjeZamowienia.setItem( i, 4, new QStandardItem( DBProxy::liczbaNaString( pozycjeZamowienia[i].ilosc) ) );
             modelPozycjeZamowienia.setItem( i, 5, new QStandardItem( QString::number( towar.vat ) + "%"  ) );
+            modelPozycjeZamowienia.setItem( i, 6, new QStandardItem( DBProxy::liczbaNaString(upust)));
+            modelPozycjeZamowienia.setItem( i, 7, new QStandardItem( DBProxy::liczbaNaString((towar.cena - (towar.cena * upust)) * pozycjeZamowienia[i].ilosc)));
         }
 
         modelPozycjeZamowienia.setHeaderData( 0, Qt::Horizontal, "Id Zamówienia" );
@@ -59,8 +66,8 @@ void SzczegolyZamowienia::pobierzSzczegoly(){
         modelPozycjeZamowienia.setHeaderData( 3, Qt::Horizontal, "Cena" );
         modelPozycjeZamowienia.setHeaderData( 4, Qt::Horizontal, "Iloœæ" );
         modelPozycjeZamowienia.setHeaderData( 5, Qt::Horizontal, "VAT" );
-
-
+        modelPozycjeZamowienia.setHeaderData( 6, Qt::Horizontal, "Upust" );
+        modelPozycjeZamowienia.setHeaderData( 7, Qt::Horizontal, "Kwota" );
 
         ui->tableListaSzczegoly->setModel( &modelPozycjeZamowienia );
         ui->tableListaSzczegoly->setColumnWidth( 0, 70 );
@@ -69,6 +76,8 @@ void SzczegolyZamowienia::pobierzSzczegoly(){
         ui->tableListaSzczegoly->setColumnWidth( 3, 40 );
         ui->tableListaSzczegoly->setColumnWidth( 4, 35 );
         ui->tableListaSzczegoly->setColumnWidth( 5, 40 );
+        ui->tableListaSzczegoly->setColumnWidth( 6, 40 );
+        ui->tableListaSzczegoly->setColumnWidth( 7, 40 );
         ui->tableListaSzczegoly->setEditTriggers( QAbstractItemView::NoEditTriggers);
 
     }

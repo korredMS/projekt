@@ -12,7 +12,7 @@ EdycjaSklep::EdycjaSklep(QWidget *parent, DBProxy &adb, DBProxy::Sklep *asklep, 
 {
     ui->setupUi(this);
     connect(ui->zapiszButton,SIGNAL(clicked()),this,SLOT(zapiszClicked()));
-    setWindowTitle(tr("Edycja sklepu"));
+    setWindowTitle(tr("Dodawanie sklepu"));
 
     if( !dodaje ) {
         ui->nazwaEdit->setText( asklep->nazwa );
@@ -23,10 +23,11 @@ EdycjaSklep::EdycjaSklep(QWidget *parent, DBProxy &adb, DBProxy::Sklep *asklep, 
         ui->telefonEdit->setText( asklep->telefon);
         ui->faxEdit->setText( asklep->fax);
         ui->emailEdit->setText( asklep->email);
-        ui->upustEdit->setText( QString::number(asklep-> upust));
         ui->loginEdit->setText( asklep->login);
         ui->hasloEdit->setText( asklep->haslo);
-        ui->zapiszButton->setText("Modyfikuj");
+        ui->upustEdit->setText( QString::number(asklep-> upust));
+        ui->zapiszButton->setText("Aktualizuj");
+        setWindowTitle(tr("Aktualizacjia danych"));
     }
 
 }
@@ -63,9 +64,9 @@ void EdycjaSklep::zapiszClicked()
                           ui->telefonEdit->text(),
                           ui->faxEdit->text(),
                           ui->emailEdit->text(),
-                          ui->upustEdit->text(),
                           ui->loginEdit->text(),
-                          ui->hasloEdit->text().toFloat() );
+                          ui->hasloEdit->text(),
+                          ui->upustEdit->text().toFloat());
     if( dodaje ) {
         sukces = db.dodaj( sklep );// wpisanie nowego
 
@@ -75,9 +76,9 @@ void EdycjaSklep::zapiszClicked()
     }
 
     if( sukces && dodaje)
-        QMessageBox::information( this, "Dodanie sklepu", "Dodano sklep " + ui->nazwaEdit->text(), QMessageBox::Ok);
+        QMessageBox::information( this, "Dodanie sklepu", "<CENTER>Dodano sklep </CENTER>" + ui->nazwaEdit->text(), QMessageBox::Ok);
     else if( sukces )
-        QMessageBox::information( this, "Modyfikacja sklepu", "Uaktualniono sklep " + ui->nazwaEdit->text(), QMessageBox::Ok);
+        QMessageBox::information( this, "Modyfikacja sklepu", "<CENTER>Uaktualniono sklep</CENTER> " + ui->nazwaEdit->text(), QMessageBox::Ok);
 
 
     czyscUi();

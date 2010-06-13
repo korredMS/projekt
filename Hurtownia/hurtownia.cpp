@@ -39,8 +39,21 @@ void OknoHurtownia::changeEvent(QEvent *e)
     }
 }
 
-/* OBS£UGA SKLEPÓW */
+/************************** OBS£UGA OKNA HURTOWNI **************************/
 
+void OknoHurtownia::on_koniecButton_clicked()
+{
+
+    unsigned int ret = QMessageBox::question( this, "Uwaga", "<Center>Czy na pewno chcesz opuœciæ aplikacjê?</CENTER>",
+                                              QMessageBox::Yes | QMessageBox::No );
+    if ( ret & QMessageBox::Yes ){
+        this->close();
+    }
+}
+
+
+
+/************************** OBS£UGA SKLEPÓW **************************/
 
 void OknoHurtownia::pobierzSklepy() // wyœwietlanie sklepów
 {
@@ -112,7 +125,7 @@ void OknoHurtownia::on_tableListaSklepow_clicked(QModelIndex index)
 
 void OknoHurtownia::on_usunButton_clicked() // sprawdziæ czy dzia³a ( bedzie usuwaæ z lisy ale nie z bazy)
 {
-    unsigned int ret = QMessageBox::question( this, "Uwaga", "Czy na pewno chcesz usun¹æ wybrany sklep z bazy danych?",
+    unsigned int ret = QMessageBox::question( this, "Uwaga", "<CENTER>Czy na pewno chcesz usun¹æ wybrany sklep z bazy danych?</CENTER>",
                                               QMessageBox::Yes | QMessageBox::No );
     if ( ret & QMessageBox::Yes ){
         db.usunRekord( &sklep.at(idxSklepu) );
@@ -135,7 +148,7 @@ void OknoHurtownia::on_modyfikujButton_clicked()
     edycja->show();
 }
 
-/* OBS£UGA TOWARÓW */
+/**************************  OBS£UGA TOWARÓW **************************/
 
 void OknoHurtownia::pobierzTowary()       //wyœwietlenie  towarow
 {
@@ -189,33 +202,30 @@ void OknoHurtownia::on_tableListaTowarow_clicked(QModelIndex index)
 
 void OknoHurtownia::on_buttonUsunTowar_clicked()    // usuwa z listy i z bazy
 {
-    modelTowary.clear();
+
     towaryH = db.pobierz< DBProxy::TowarHurtownia >();
     int idxTowaru = ui->tableListaTowarow->currentIndex().row();
 
-    unsigned int ret = QMessageBox::question( this, "Uwaga", "Czy na pewno chcesz usun¹æ wybrany towar z bazy danych?",
+    unsigned int ret = QMessageBox::question( this, "Uwaga", "<CENTER>Czy na pewno chcesz usun¹æ ?</CENTER>" + towaryH[ idxTowaru].nazwa,
                                               QMessageBox::Yes | QMessageBox::No );
 
 
     if ( ret & QMessageBox::Yes ){
+        if(!db.usunRekord( &towaryH.at( idxTowaru ) )){
 
-        for( int i = 0 ; i < pozycjeZamowienia.length() ; ++i)
-        {            
-            if(pozycjeZamowienia[i].idTowaru  == towaryH[idxTowaru].id){
-                QMessageBox::warning( this, "Uwaga","Nie mo¿na usun¹t towaru bed¹cego czêœci¹ zamówienie",QMessageBox::Yes  );
+            QMessageBox::warning( this, "Uwaga","<CENTER>Nie mo¿na usun¹æ towaru bed¹cego czêœci¹ zamówienia</CENTER>",QMessageBox::Ok );
 
-                pobierzTowary();
-                return;
+            pobierzTowary();
+            return;
 
-            }else {
-                db.usunRekord( &towaryH.at( idxTowaru ) );
+        }else {
 
-                towaryH.removeAt(idxTowaru);
-                modelTowary.removeRow( idxTowaru , QModelIndex() );
+            towaryH.removeAt(idxTowaru);
+            modelTowary.removeRow( idxTowaru , QModelIndex() );
+            QMessageBox::information(this, "Uwaga","<CENTER>Towar zosta³ usuniêty</CENTER>",QMessageBox::Ok  );
+            pobierzTowary();
 
-                pobierzTowary();
-                return;
-            }
+            return;
         }
     }
 
@@ -234,7 +244,7 @@ void OknoHurtownia::on_buttonModyfikujTowar_clicked()
     edycjaTowar->show();
 }
 
-/* OBS£UGA KATEGORII */
+/*************************  OBS£UGA KATEGORII *************************/
 
 void OknoHurtownia::pobierzKategorie()   {
     modelKategorie.clear();
@@ -272,13 +282,38 @@ void OknoHurtownia::on_tableListakategorii_clicked(QModelIndex index)
 
 void OknoHurtownia::on_buttonUsunKat_clicked()
 {
-    modelKategorie.clear();
+
     kH = db.pobierz< DBProxy::Kategoria >();
     int wiersz = ui->tableListakategorii->currentIndex().row();
-    if( db.usunRekord(&kH[wiersz]))
-        qDebug() << "ok";
-    else
-        qDebug() << "dupa";
+    unsigned int ret = QMessageBox::question( this, "Uwaga", "<CENTER>Czy na pewno chcesz usun¹æ ?</CENTER>" + kH[ wiersz].nazwa,
+                                              QMessageBox::Yes | QMessageBox::No );
+
+
+    if ( ret & QMessageBox::Yes ){
+        if(!db.usunRekord( &kH.at( wiersz ) )){
+
+            QMessageBox::warning( this, "Uwaga","<CENTER>Nie mo¿na usun¹æ kategorii,<BR> do której przypisany jeste towar</CENTER>",QMessageBox::Ok );
+
+            pobierzZamowienia();
+            return;
+
+        }else {
+
+            kH.removeAt(wiersz);
+            modelKategorie.removeRow( wiersz , QModelIndex() );
+            QMessageBox::information(this, "Uwaga","<CENTER>Kategoria zosta³a usuniêta</CENTER>",QMessageBox::Ok  );
+
+            pobierzZamowienia();
+            pobierzTowary();
+            return;
+        }
+    }
+
+    if ( ret & QMessageBox::No ){
+        pobierzZamowienia();
+        pobierzTowary();
+        return;
+    }
 
     pobierzKategorie();
     pobierzTowary();
@@ -294,7 +329,7 @@ void OknoHurtownia::on_buttonModyfikujKat_clicked()
 }
 
 
-/* OBS£UGA ZAMÓWIEÑ */
+/************************* OBS£UGA ZAMÓWIEÑ **************************/
 
 void OknoHurtownia::pobierzZamowienia()       //lista zamowien
 {
@@ -329,8 +364,6 @@ void OknoHurtownia::pobierzZamowienia()       //lista zamowien
 
 
 }
-
-
 
 void OknoHurtownia::on_tableZamowienia_clicked(QModelIndex index)
 {
@@ -439,5 +472,7 @@ void OknoHurtownia::on_odswiezButton_clicked()
 {
     pobierzZamowienia();
 }
+
+
 
 

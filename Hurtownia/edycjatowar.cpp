@@ -12,6 +12,7 @@ EdycjaTowar::EdycjaTowar(QWidget *parent, DBProxy &adb,DBProxy::TowarHurtownia *
         dodajeT(dodajeNowyT)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Dodawanie towaru"));
 
     if( !dodajeT ) {
             ui->lineNazwaT->setText( atowar->nazwa );
@@ -20,7 +21,8 @@ EdycjaTowar::EdycjaTowar(QWidget *parent, DBProxy &adb,DBProxy::TowarHurtownia *
             ui->lineCenaT->setText( QString::number (atowar->cena) );
             ui->lineVatT->setText( QString::number (atowar->vat));
             ui->lineIdKategorT->setText( QString::number (atowar->idKategorii) );
-            ui->buttonDodajT->setText("Modyfikuj");
+            ui->buttonDodajT->setText("Aktualizuj");
+            setWindowTitle(tr("Aktualizacja nowego towaru"));
         }
 }
 
@@ -50,7 +52,7 @@ void EdycjaTowar::on_buttonAnulujT_clicked()
 void EdycjaTowar::on_buttonDodajT_clicked()
 {
     if(ui->lineNazwaT->text().isEmpty()){
-        QMessageBox::critical(this,"Dodanie Towaru","Niepowodzenie",QMessageBox::Ok);
+        QMessageBox::critical(this,"Dodanie Towaru","<CENTER>Niepowodzenie</CENTER>",QMessageBox::Ok);
     return;
     }
     unsigned int sukces;
@@ -70,9 +72,9 @@ void EdycjaTowar::on_buttonDodajT_clicked()
     }
 
     if( sukces && dodajeT)
-        QMessageBox::information( this, "Dodanie towaru", "Dodano towar " + ui->lineNazwaT->text(), QMessageBox::Ok);
+        QMessageBox::information( this, "Dodanie towaru", "<CENTER>Dodano towar </CENTER>" + ui->lineNazwaT->text(), QMessageBox::Ok);
     else if( sukces )
-        QMessageBox::information( this, "Modyfikacja towaru", "Uaktualniono towar " + ui->lineNazwaT->text(), QMessageBox::Ok);
+        QMessageBox::information( this, "Modyfikacja towaru", "<CENTER>Uaktualniono towar </CENTER>" + ui->lineNazwaT->text(), QMessageBox::Ok);
         
         
 

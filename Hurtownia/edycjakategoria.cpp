@@ -11,10 +11,12 @@ EdycjaKategoria::EdycjaKategoria(QWidget *parent,DBProxy &adb, DBProxy::Kategori
     dodajeK (dodajeNowy)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Dodawanie kategorii"));
 
     if (!dodajeK){
         ui->lineNazwaKat->setText( akategoria->nazwa);
-        ui->buttonDodajKategoria->setText("Modyfikuj");
+        ui->buttonDodajKategoria->setText("Aktualizuj");
+        setWindowTitle(tr("Aktualizacja kategorii"));
     }
 }
 
@@ -44,7 +46,7 @@ void EdycjaKategoria::on_buttonDodajKategoria_clicked()
 {
 
     if(ui->lineNazwaKat->text().isEmpty()){
-        QMessageBox::critical(this,"Dodanie sklepu","Niepowodzenie",QMessageBox::Ok);
+        QMessageBox::critical(this,"Dodanie sklepu","</CENTER>Niepowodzenie</CENTER>",QMessageBox::Ok);
         return;
     }
 
@@ -60,9 +62,9 @@ void EdycjaKategoria::on_buttonDodajKategoria_clicked()
      }
 
      if( sukces && dodajeK)
-         QMessageBox::information( this, "Dodanie kategorii", "Dodano kategorie " + ui->lineNazwaKat->text(), QMessageBox::Ok);
+         QMessageBox::information( this, "<CENTER>Dodanie kategorii", "Dodano kategorie</CENTER> " + ui->lineNazwaKat->text(), QMessageBox::Ok);
      else if( sukces )
-         QMessageBox::information( this, "Modyfikacja sklepu", "Uaktualniono kategorie " + ui->lineNazwaKat->text(), QMessageBox::Ok);
+         QMessageBox::information( this, "Modyfikacja sklepu", "<CENTER>Uaktualniono kategorie</CENTER> " + ui->lineNazwaKat->text(), QMessageBox::Ok);
 
      czyscUi();
      emit odswiezTabeleKategoria();

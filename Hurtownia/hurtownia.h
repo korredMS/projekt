@@ -56,7 +56,7 @@ private:
 
 private slots:
 
-
+    void on_koniecButton_clicked();
     void on_odswiezButton_clicked();
     void on_szczegolyButton_clicked();
     void on_buttonModyfikujKat_clicked();

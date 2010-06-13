@@ -6,6 +6,7 @@
 #include <QStandardItemModel>
 #include "../DBProxy/DBProxy.h"
 
+
 namespace Ui {
     class SzczegolyZamowienia;
 }
