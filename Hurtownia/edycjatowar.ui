@@ -91,16 +91,35 @@
              <widget class="QLineEdit" name="lineOpisT"/>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineIloscT"/>
+             <widget class="QLineEdit" name="lineIloscT">
+              <property name="inputMask">
+               <string>999999999999999999999999999999999999999999999; </string>
+              </property>
+             </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineCenaT"/>
+             <widget class="QLineEdit" name="lineCenaT">
+              <property name="inputMask">
+               <string>999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999; </string>
+              </property>
+             </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineVatT"/>
+             <widget class="QLineEdit" name="lineVatT">
+              <property name="inputMask">
+               <string>99; </string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineIdKategorT"/>
+             <widget class="QLineEdit" name="lineIdKategorT">
+              <property name="inputMask">
+               <string>999999999999999; </string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

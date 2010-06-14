@@ -56,17 +56,22 @@ void EdycjaSklep::zapiszClicked()
     }
 
     unsigned int sukces;
-    DBProxy::Sklep sklep( ui->nazwaEdit->text(),
-                          ui->regonEdit->text(),
-                          ui->ulicaEdit->text(),
-                          ui->miejscowoscEdit->text(),
-                          ui->kodPocztowyEdit->text(),
-                          ui->telefonEdit->text(),
-                          ui->faxEdit->text(),
-                          ui->emailEdit->text(),
-                          ui->loginEdit->text(),
-                          ui->hasloEdit->text(),
-                          ui->upustEdit->text().toFloat());
+
+
+        DBProxy::Sklep sklep( ui->nazwaEdit->text(),
+                              ui->regonEdit->text(),
+                              ui->ulicaEdit->text(),
+                              ui->miejscowoscEdit->text(),
+                              ui->kodPocztowyEdit->text(),
+                              ui->telefonEdit->text(),
+                              ui->faxEdit->text(),
+                              ui->emailEdit->text(),
+                              ui->loginEdit->text(),
+                              ui->hasloEdit->text(),
+                              ui->upustEdit->text().toFloat());
+
+
+
     if( dodaje ) {
         sukces = db.dodaj( sklep );// wpisanie nowego
 
@@ -99,7 +104,6 @@ void EdycjaSklep::czyscUi()
     ui->loginEdit->clear();
     ui->hasloEdit->clear();
 }
-
 
 
 void EdycjaSklep::on_anulujButton_clicked()

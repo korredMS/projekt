@@ -46,10 +46,16 @@ void SzczegolyZamowienia::pobierzSzczegoly(){
                                                                                                  Filtr( mZamowienie->id ) );
         QList <ZamowienieHurtownia> zamowienieH = db.pobierz < ZamowienieHurtownia> (ZamowienieHurtownia::Id, Filtr( mZamowienie->id));
 
+        double razemNetto = 0;
+        double razemBrutto = 0;
+        int iloscTowarow = 0;
         for (int i = 0; i < pozycjeZamowienia.size(); i++) {
             TowarHurtownia towar = db.pobierz< TowarHurtownia >( TowarHurtownia::Id, Filtr( pozycjeZamowienia[i].idTowaru )).first();
             double upust = zamowienieH[mZamowienie->Id].upust * 0.01;
-            
+            razemNetto += towar.cena * pozycjeZamowienia[i].ilosc;
+            razemBrutto += (towar.cena + (towar.cena * (towar.vat * 0.01))) * pozycjeZamowienia[i].ilosc;
+            iloscTowarow += pozycjeZamowienia[i].ilosc;
+
             modelPozycjeZamowienia.setItem( i, 0, new QStandardItem( DBProxy::liczbaNaString( pozycjeZamowienia[i].idZamowienia ) ) );
             modelPozycjeZamowienia.setItem( i, 1, new QStandardItem( towar.nazwa ));
             modelPozycjeZamowienia.setItem( i, 2, new QStandardItem( towar.opis ) );
@@ -80,6 +86,14 @@ void SzczegolyZamowienia::pobierzSzczegoly(){
         ui->tableListaSzczegoly->setColumnWidth( 7, 40 );
         ui->tableListaSzczegoly->setEditTriggers( QAbstractItemView::NoEditTriggers);
 
+        ui->nettoEdit->setText(DBProxy::liczbaNaString(razemNetto));
+        ui->bruttoEdit->setText(DBProxy::liczbaNaString(razemBrutto));
+        ui->podatekEdit->setText(DBProxy::liczbaNaString(razemBrutto - razemNetto));;
+        ui->iloscTowarowEdit->setText(DBProxy::liczbaNaString(iloscTowarow));
+        ui->dataZlozeniaEdit->setText(DBProxy::dataNaString ( zamowienieH[mZamowienie->Id].dataZlozenia));
+        ui->dataRalizacjiEdit->setText(DBProxy::dataNaString ( zamowienieH[mZamowienie->Id].dataRealizacji));
+        ui->statusEdit->setText(DBProxy::statusNaString( zamowienieH[mZamowienie->Id].status));
+        ui->nrFakturyEdit->setText(zamowienieH[mZamowienie->Id].nrFaktury);
     }
 
 }
