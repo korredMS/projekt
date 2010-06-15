@@ -131,13 +131,16 @@ void OknoHurtownia::on_usunButton_clicked() // sprawdziæ czy dzia³a ( bedzie usu
     unsigned int ret = QMessageBox::question( this, "Uwaga", "<CENTER>Czy na pewno chcesz usun¹æ wybrany sklep z bazy danych?</CENTER>",
                                               QMessageBox::Yes | QMessageBox::No );
     if ( ret & QMessageBox::Yes ){
-        db.usunRekord( &sklep.at(idxSklepu) );
-
-        //sprawdŸ czy usun¹³!
+        if(db.usunRekord( &sklep.at(idxSklepu)) ){        //sprawdŸ czy usun¹³!
         sklep.removeAt(idxSklepu);
         modelSklepy.removeRow( idxSklepu , QModelIndex() );
         pobierzSklepy();
         return;
+    }else{
+        QMessageBox::information( this, "Uwaga","<CENTER>Nie mo¿na usun¹æ towaru bed¹cego czêœci¹ zamówienia</CENTER>",QMessageBox::Ok );
+        return;
+    }
+
     }
     
     if ( ret & QMessageBox::No ){
