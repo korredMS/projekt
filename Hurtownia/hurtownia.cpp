@@ -137,7 +137,7 @@ void OknoHurtownia::on_usunButton_clicked() // sprawdziæ czy dzia³a ( bedzie usu
         pobierzSklepy();
         return;
     }else{
-        QMessageBox::information( this, "Uwaga","<CENTER>Nie mo¿na usun¹æ towaru bed¹cego czêœci¹ zamówienia</CENTER>",QMessageBox::Ok );
+        QMessageBox::information( this, "Uwaga","<CENTER>Nie mo¿na usun¹æ slepu sk³adajacego zamównienie</CENTER>",QMessageBox::Ok );
         return;
     }
 

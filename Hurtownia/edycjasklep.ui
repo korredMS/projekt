@@ -176,8 +176,11 @@
            <property name="autoFillBackground">
             <bool>false</bool>
            </property>
+           <property name="inputMask">
+            <string>999999999; </string>
+           </property>
            <property name="maxLength">
-            <number>50</number>
+            <number>9</number>
            </property>
           </widget>
          </item>
