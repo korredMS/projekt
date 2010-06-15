@@ -446,8 +446,10 @@ void OknoHurtownia::on_buttonRealizujZamowieni_clicked()
         zamowienie.dataRealizacji = QDate::currentDate();
         db.uaktualnij( zamowienie );
         pobierzZamowienia();
+        pobierzTowary();
     }
 }
+pobierzTowary();
 pobierzZamowienia();
 }
 
